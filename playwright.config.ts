@@ -8,6 +8,7 @@ import { defineConfig, devices } from '@playwright/test';
 const PORT = Number(process.env.VT_PORT ?? 5173);
 
 export default defineConfig({
+	globalSetup: './tests/e2e/global-setup.ts',
 	testDir: 'tests/e2e',
 	fullyParallel: true,
 	forbidOnly: !!process.env.CI,
@@ -26,9 +27,32 @@ export default defineConfig({
 		env: { VITE_API_MODE: 'mock' }
 	},
 	projects: [
-		{ name: 'phone', use: { ...devices['Pixel 7'], viewport: { width: 360, height: 800 } } },
+		{
+			// Real pipeline (Section 21.1): Chromium fake camera fed a Y4M clip with the marker.
+			name: 'real-camera',
+			testMatch: /real\.spec\.ts/,
+			use: {
+				...devices['Pixel 7'],
+				viewport: { width: 360, height: 800 },
+				permissions: ['camera'],
+				launchOptions: {
+					args: [
+						'--use-fake-ui-for-media-stream',
+						'--use-fake-device-for-media-stream',
+						'--use-file-for-fake-video-capture=test-results/fixtures/marker-1080x1920.y4m',
+						'--enable-unsafe-swiftshader'
+					]
+				}
+			}
+		},
+		{
+			name: 'phone',
+			testIgnore: /real\.spec\.ts/,
+			use: { ...devices['Pixel 7'], viewport: { width: 360, height: 800 } }
+		},
 		{
 			name: 'desktop',
+			testIgnore: /real\.spec\.ts/,
 			use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } }
 		}
 	]

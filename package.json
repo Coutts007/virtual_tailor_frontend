@@ -24,9 +24,14 @@
 		"i18n:review": "vite-node -c scripts/vite-node.config.mjs scripts/i18n-review.ts",
 		"ci": "npm run lint && npm run check && npm run test:unit && npm run test:coverage && npm run licenses && npm run build",
 		"marker": "node scripts/make-marker-sheet.mjs",
-		"test:coverage": "vitest run --coverage tests/unit/measure"
+		"test:coverage": "vitest run --coverage tests/unit/measure",
+		"vendor": "node scripts/vendor-assets.mjs",
+		"predev": "node scripts/vendor-assets.mjs || echo \"vision assets missing: run npm run vendor when online\"",
+		"prebuild": "node scripts/vendor-assets.mjs"
 	},
 	"dependencies": {
+		"@mediapipe/tasks-vision": "^1.1.0",
+		"@techstark/opencv-js": "^4.10.0-release.1",
 		"dexie": "^4.4.6",
 		"qrcode": "^1.5.4",
 		"wasm-feature-detect": "^1.9.0"

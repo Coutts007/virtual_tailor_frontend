@@ -11,7 +11,15 @@ const CACHE = `vt-shell-${version}`;
  * Precache the app shell, static assets, model files, WASM, fonts and the marker
  * sheet PDF. Never API responses (privacy invariant 2.1.4).
  */
-const EXCLUDE = [/^\/mockServiceWorker\.js$/, /^\/audio\/.*\.md$/, /\/\.gitkeep$/];
+const EXCLUDE = [
+	/^\/mockServiceWorker\.js$/,
+	/^\/audio\/.*\.md$/,
+	/\/\.gitkeep$/,
+	/^\/(models|wasm|opencv)\//
+];
+/** Vision assets: cached only by the client's "Download now" (UX principle 10), served from there. */
+const MODEL_CACHE = 'vt-models-v1';
+const MODEL_PATH = /^\/(models|wasm|opencv)\//;
 export const PRECACHE = [...build, ...files].filter((p) => !EXCLUDE.some((re) => re.test(p)));
 
 export function isApiRequest(url: URL): boolean {
@@ -25,9 +33,21 @@ sw.addEventListener('install', (event) => {
 sw.addEventListener('activate', (event) => {
 	event.waitUntil(
 		(async () => {
-			for (const key of await caches.keys()) if (key !== CACHE) await caches.delete(key);
+			for (const key of await caches.keys())
+				if (key !== CACHE && key !== MODEL_CACHE) await caches.delete(key);
 			await sw.clients.claim();
 		})()
+	);
+});
+
+/** Chromium Background Sync (bonus, 12.2): ask an open client to run the sync queue. */
+sw.addEventListener('sync', (event: Event) => {
+	const e = event as Event & { tag: string; waitUntil(p: Promise<unknown>): void };
+	if (e.tag !== 'vt-sync') return;
+	e.waitUntil(
+		sw.clients
+			.matchAll({ type: 'window' })
+			.then((cs) => cs.forEach((c) => c.postMessage('VT_RUN_SYNC')))
 	);
 });
 
@@ -41,6 +61,13 @@ sw.addEventListener('fetch', (event) => {
 	const url = new URL(req.url);
 	if (url.origin !== sw.location.origin) return; // API on another origin: network only.
 	if (isApiRequest(url)) return; // Never cache API responses.
+
+	if (MODEL_PATH.test(url.pathname)) {
+		event.respondWith(
+			(async () => (await (await caches.open(MODEL_CACHE)).match(url.pathname)) ?? fetch(req))()
+		);
+		return;
+	}
 
 	event.respondWith(
 		(async () => {

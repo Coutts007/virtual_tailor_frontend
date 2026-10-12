@@ -1,1 +1,17 @@
-[]
+[
+	{
+		"name": "MediaPipe Pose Landmarker Lite model (pose_landmarker_lite.task)",
+		"source": "storage.googleapis.com/mediapipe-models (pinned SHA-256 in scripts/vendor-assets.mjs)",
+		"licence": "Apache-2.0"
+	},
+	{
+		"name": "MediaPipe Tasks Vision WASM (vision_wasm_internal.*)",
+		"source": "@mediapipe/tasks-vision 1.1.0",
+		"licence": "Apache-2.0"
+	},
+	{
+		"name": "OpenCV.js 4.10 (opencv.js, ArUco in objdetect)",
+		"source": "@techstark/opencv-js 4.10.0-release.1",
+		"licence": "Apache-2.0"
+	}
+]

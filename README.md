@@ -4,7 +4,7 @@ The client-side tier of **Virtual Tailor (VT)**, a final-year Computer Science p
 
 The full build specification is `../VT_frontend_agent_prompt.md`. Owner decisions are in `docs/decisions.md`.
 
-> **Status:** Phases 0–2 and 4 complete (client flow on fake vision, measurement module). See "Phases" below.
+> **Status:** Phases 0–4 complete (client flow, real capture pipeline, measurement module). Device tests on the reference phones are still to be run. See "Phases" below.
 
 ## Requirements
 
@@ -16,7 +16,8 @@ The full build specification is `../VT_frontend_agent_prompt.md`. Owner decision
 ```bash
 cp .env.example .env     # defaults to the mock backend
 npm install
-npm run dev              # http://localhost:5173
+npm run vendor           # once, online: self-hosts MediaPipe WASM, OpenCV.js, the pose model, builds the workers
+npm run dev              # http://localhost:5173 (runs vendor again; skips files already present)
 ```
 
 In development with `VITE_API_MODE=mock`, a Mock Service Worker (MSW) answers every `/api/v1` request from deterministic seed data (`mocks/`).
@@ -69,6 +70,7 @@ Set `VITE_API_MODE=http` (and `VITE_API_BASE_URL` if the API is on another origi
 | `npm run licenses` | Regenerates `docs/LICENSES.md` and fails on prohibited licences |
 | `npm run i18n:review` | Regenerates `docs/i18n-review.md` from the Kiswahili dictionary |
 | `npm run marker` | Regenerates the A4 measuring sheet PDF and preview SVG |
+| `npm run vendor` | Self-hosts the vision assets (pinned SHA-256 model download) and bundles the classic vision workers |
 | `npm run ci` | Everything CI runs except e2e |
 
 ## Project layout
@@ -123,7 +125,7 @@ Note that the capture thresholds in `src/lib/capture/config.ts` are hashed separ
 | 0 | Setup: scaffold, tokens, i18n skeleton, Dexie, MSW, CI, docs | ✅ Done |
 | 1 | Design system (`/dev/ui`) and API contract + full mock | ✅ Done |
 | 2 | Client flow with fake vision | ✅ Done |
-| 3 | Real capture pipeline | |
+| 3 | Real capture pipeline | ✅ Done (device tests pending) |
 | 4 | Measurement module | ✅ Done |
 | 5 | Tailor dashboard | |
 | 6 | Admin and study | |

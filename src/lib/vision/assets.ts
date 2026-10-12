@@ -1,14 +1,19 @@
 /**
- * Self-hosted model and WASM assets (Section 5, privacy invariant 3). The list is
- * filled in Phase 3; sizes drive the "about N MB" messages (UX principle 10).
+ * Self-hosted model and WASM assets (Section 5, privacy invariant 3), listed by
+ * scripts/vendor-assets.mjs. Sizes drive the "about N MB" messages and the
+ * download progress (UX principle 10). The service worker never precaches
+ * these; they enter Cache Storage only after the client taps "Download now".
  */
-export const MODEL_ASSETS: { url: string; bytes: number }[] = [];
+import manifest from './asset-manifest.json';
+
+export const MODEL_ASSETS: { url: string; bytes: number }[] = manifest.assets;
 export const MODEL_DOWNLOAD_MB = Math.max(
 	1,
 	Math.round(MODEL_ASSETS.reduce((s, a) => s + a.bytes, 0) / 1e6)
 );
 
-const CACHE = 'vt-models-v1';
+export const MODEL_CACHE_NAME = 'vt-models-v1';
+const CACHE = MODEL_CACHE_NAME;
 
 export async function modelsCached(): Promise<boolean> {
 	if (!MODEL_ASSETS.length) return true;
@@ -73,5 +78,3 @@ export async function downloadModels(
 	onProgress(total, total);
 	return true;
 }
-
-export const MODEL_CACHE = CACHE;

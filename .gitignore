@@ -12,3 +12,12 @@ vite.config.*.timestamp-*
 
 # MSW worker must never ship from static/ (served by a dev middleware from mocks/public)
 /static/mockServiceWorker.js
+
+# Vendored vision assets (npm run vendor): self-hosted, not committed
+/static/wasm/*
+!/static/wasm/.gitkeep
+/static/opencv/*
+!/static/opencv/.gitkeep
+/static/models/*
+!/static/models/.gitkeep
+/static/workers/

@@ -53,7 +53,12 @@ export function liveCaptureBuffers(): number {
 
 // Dev builds expose the counter to Playwright (Section 21.1 memory test).
 if (import.meta.env.DEV && typeof window !== 'undefined') {
-	(window as unknown as { __vt?: Record<string, unknown> }).__vt = { liveCaptureBuffers };
+	void import('$lib/vision/imageOps').then(({ liveBitmaps }) => {
+		(window as unknown as { __vt?: Record<string, unknown> }).__vt = {
+			liveCaptureBuffers,
+			liveBitmaps
+		};
+	});
 }
 
 export async function loadDraft(): Promise<void> {

@@ -240,6 +240,17 @@
 		const shutterAt = Date.now();
 		try {
 			const result = await engine.burst(view, performance.now());
+			// Final state of each check for this view (10.4): all passed to get here.
+			result.checks = {
+				level: draft.level_unchecked ? 'skipped' : 'pass',
+				frame: 'pass',
+				distance: 'pass',
+				symmetry: 'pass',
+				arms: 'pass',
+				marker: 'pass',
+				light: 'pass',
+				sharpness: 'pass'
+			};
 			capture[view] = result;
 			capture.still_source = result.still_source;
 			capture.burst_done_at = shutterAt;

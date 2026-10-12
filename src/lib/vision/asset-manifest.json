@@ -1,0 +1,20 @@
+{
+	"assets": [
+		{
+			"url": "/wasm/vision_wasm_internal.js",
+			"bytes": 335393
+		},
+		{
+			"url": "/wasm/vision_wasm_internal.wasm",
+			"bytes": 12997248
+		},
+		{
+			"url": "/opencv/opencv.js",
+			"bytes": 10378215
+		},
+		{
+			"url": "/models/pose_landmarker_lite.task",
+			"bytes": 5777746
+		}
+	]
+}

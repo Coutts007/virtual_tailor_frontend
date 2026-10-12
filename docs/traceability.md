@@ -7,12 +7,12 @@ The "Test" column is filled in as each test is written. *Planned* means not buil
 | FR-01 PWA, offline capture | 5, 9.6, 9.14, 12 | e2e offline capture | `client.spec.ts` save-while-send-fails → pending → sends; offline shell on the production build in Phase 7 |
 | FR-02 code, height, sex, fit; refuse without code | 9.2 | unit validators; e2e | `validate.test.ts`; `client.spec.ts` details form (mask, range, feet), full flows |
 | FR-03 bilingual consent, version recorded | 9.3, 16 | e2e EN/SW consent | `client.spec.ts` consent required + version line; full flow EN and SW |
-| FR-04 live checks, shutter disabled until pass | 9.7, 9.8, 10.3 | unit checks; e2e fixtures | `capture/checks.test.ts` (24); `client.spec.ts` every correction in priority order + shutter disabled |
-| FR-05 5-frame burst, medians | 10.4 | unit | `capture/stateMachine.test.ts` (burst states); `client.spec.ts` bad burst → retry; real medians in Phase 3 |
+| FR-04 live checks, shutter disabled until pass | 9.7, 9.8, 10.3 | unit checks; e2e fixtures | `capture/checks.test.ts` (24); `vision.test.ts` frame stats; `client.spec.ts` every correction + shutter disabled; `real.spec.ts` live marker/pose checks |
+| FR-05 5-frame burst, medians | 10.4 | unit | `vision.test.ts` (medians, majority mask, marker confidence); `capture/stateMachine.test.ts`; `client.spec.ts` bad burst |
 | FR-06 marker + stature scales, 4% rule | 11.1, 9.9 | unit; e2e retake | `measure/scale.test.ts`; `client.spec.ts` scale disagreement → retake front |
 | FR-07 eight measurements by Table 3.1 | 11.2 | unit synthetic body | `measure/profile.test.ts` full synthetic bodies (6 bodies, ±1.5% lengths / ±3% girths); `sites.test.ts` |
 | FR-08 flags | 11.3, 9.10 | unit; e2e review | `measure/flags.test.ts`; `client.spec.ts` inside leg Not measured with reason |
-| FR-09 frames discarded; no image stored/sent | 2.1, 10.2, 19 | memory + network privacy tests | `imageGuard.test.ts`; `client.spec.ts` network interception, buffers released, IndexedDB dump |
+| FR-09 frames discarded; no image stored/sent | 2.1, 10.2, 19 | memory + network privacy tests | `imageGuard.test.ts`; `client.spec.ts` buffers released + IndexedDB dump; `real.spec.ts` zero live ImageBitmaps after capture |
 | FR-10 IndexedDB profile | 12.1 | unit; e2e reload | `sync.test.ts` (save, version); `client.spec.ts` My measurements survives reload; nothing image-like in IndexedDB |
 | FR-11 sync, LWW, conflicts shown | 12.2, 13.10 | unit sync; e2e conflict | `sync.test.ts` (201/404/409/422/backoff/24 h/online); contract; tailor conflicts screen in Phase 5 |
 | FR-12 review, retake, save/discard | 9.10 | e2e | `client.spec.ts` full flows, retake, delete my data |
@@ -28,7 +28,7 @@ The "Test" column is filled in as each test is written. *Planned* means not buil
 | FR-22 study CSV export | 15.5 | e2e | contract (Appendix E columns present) |
 | FR-23 blind tape entry | 15.2 | e2e (no system values in DOM) | contract (locked, out-of-order, values not echoed, measurer 403 on profiles) |
 | NFR-01 ≤ 20 s | 18, 21.2 | device log | planned |
-| NFR-02 ≤ 30 MB first load | 18 | Lighthouse / network | planned |
+| NFR-02 ≤ 30 MB first load | 18 | Lighthouse / network | vendor report: 29.5 MB raw, ≈ 12.3 MB gzip (`docs/device-test-log.md`); Lighthouse in Phase 7 |
 | NFR-03 offline capture and auto-sync | 12.2 | e2e offline | `sync.test.ts` online wake; `client.spec.ts` pending → sent |
 | NFR-04 accuracy tiers | 11 | validation study (outside repo) | n/a |
 | NFR-05 SUS ≥ 68 | 13 | tailor study (outside repo) | n/a |
@@ -36,7 +36,7 @@ The "Test" column is filled in as each test is written. *Planned* means not buil
 | NFR-07 ≥ 80% self-capture within 3 attempts | 9.6–9.8, 10.6 | pilot logs | n/a |
 | NFR-08 no profile lost | 12.2 | fault-injection e2e | `client.spec.ts` send fails → reload → still pending → sent; `sync.test.ts` write-before-Saved |
 | NFR-09 TLS, token expiry | 19 | config review | `docs/api-contract.md` headers (partial) |
-| NFR-10 no image leaves phone | 2.1, 19 | network privacy test | `client.spec.ts` network interception (fake vision); rerun with real pipeline in Phase 3 |
+| NFR-10 no image leaves phone | 2.1, 19 | network privacy test | `client.spec.ts` (fake vision) and `real.spec.ts` (real camera + workers) network interception |
 | NFR-11 append-only audit (server) | 13.11 | contract note | `docs/api-contract.md` audit section |
 | NFR-12 platform floor (C3) | 2.2, 9.4 | device log | planned |
 | NFR-13 versioned rules, unit tests | 11.2, 11.4 | coverage ≥ 90% in measure/ | `measure/rules.test.ts`; coverage 99.25% statements of `src/lib/measure` (CI gate) |
