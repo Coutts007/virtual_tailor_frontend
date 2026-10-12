@@ -43,8 +43,6 @@ export const en = {
 
 	'welcome.title': 'Welcome',
 	'welcome.chooseLanguage': 'Choose your language',
-	'welcome.phase0Note':
-		'Virtual Tailor is being built. The measuring flow arrives in a later phase.',
 
 	'common.optional': 'optional',
 	'common.required': 'required',

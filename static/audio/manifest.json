@@ -1,0 +1,5 @@
+{
+	"_note": "Keys of recorded clips present in /audio/{lang}/{key}.mp3 (≤ 15 KB each, native speaker) [CONFIRM]. Empty until recordings exist; speechSynthesis is used when a voice is available. See static/audio/README.md.",
+	"en": [],
+	"sw": []
+}

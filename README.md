@@ -4,7 +4,7 @@ The client-side tier of **Virtual Tailor (VT)**, a final-year Computer Science p
 
 The full build specification is `../VT_frontend_agent_prompt.md`. Owner decisions are in `docs/decisions.md`.
 
-> **Status:** Phase 1 (design system and API contract) complete. See "Phases" below.
+> **Status:** Phases 0–2 and 4 complete (client flow on fake vision, measurement module). See "Phases" below.
 
 ## Requirements
 
@@ -25,6 +25,9 @@ In development with `VITE_API_MODE=mock`, a Mock Service Worker (MSW) answers ev
 
 - **http://localhost:5173/dev/ui**: component gallery (every component in Section 8.4, EN/SW).
 - **http://localhost:5173/dev/mock**: mock backend controls: latency on/off, force an error per endpoint, reset data to the seed.
+- **http://localhost:5173/dev/capture-tuning**: choose fake vision (scripted scenarios, time scale) or the real camera, and watch every capture check's live values against its threshold.
+
+In development the capture flow uses **simulated vision** by default, so the whole client flow (`/` → measure → review → saved) works on a laptop without a camera.
 
 ### Seed accounts (mock)
 
@@ -65,6 +68,7 @@ Set `VITE_API_MODE=http` (and `VITE_API_BASE_URL` if the API is on another origi
 | `npm run test:e2e` | Playwright (phone 360 × 800 and desktop 1280 × 800) with axe-core |
 | `npm run licenses` | Regenerates `docs/LICENSES.md` and fails on prohibited licences |
 | `npm run i18n:review` | Regenerates `docs/i18n-review.md` from the Kiswahili dictionary |
+| `npm run marker` | Regenerates the A4 measuring sheet PDF and preview SVG |
 | `npm run ci` | Everything CI runs except e2e |
 
 ## Project layout
@@ -101,7 +105,16 @@ See `docs/api-contract.md` → "Deployment headers" (CSP, HSTS). COOP/COEP are n
 
 ## Updating `rules_version` after calibration
 
-Phase 4. The measurement rules live in `src/lib/measure/rules.ts`; this section will describe the procedure.
+The measurement rules live in `src/lib/measure/rules.ts` (`RULES_VERSION = "0.1-uncalibrated"`, all correction factors 1.0).
+
+1. Fit the calibration subset outside the app (Section 3.6). Output the new constants: girth correction factors `cf.*`, `chest_level`, `waist_level`, `acromion_offset_mm`, and optionally `neck_search_from`, `bust_search` and the thresholds.
+2. Edit `DEFAULT_RULES` in `src/lib/measure/rules.ts` with the fitted values.
+3. Bump `RULES_VERSION` to a new frozen name, e.g. `"1.0-ke-cal25"`. Never reuse a version string.
+4. Run `npx vitest run tests/unit/measure`. The synthetic-body tolerance tests assume CF = 1, so update their expected truth or tolerances to reflect the new factors (synthetic truth × CF), and keep coverage ≥ 90 %.
+5. The config hash (`configHash()`) changes automatically. Every new profile records `rules_version`, `config_hash` and the model variant, so old and new profiles stay distinguishable on the server and in the study export.
+6. Note the change, the calibration date and the data set in `docs/decisions.md`.
+
+Note that the capture thresholds in `src/lib/capture/config.ts` are hashed separately; a profile's `config_hash` is `<rules hash>.<capture hash>`.
 
 ## Phases (Section 22)
 
@@ -109,9 +122,9 @@ Phase 4. The measurement rules live in `src/lib/measure/rules.ts`; this section 
 |---|---|---|
 | 0 | Setup: scaffold, tokens, i18n skeleton, Dexie, MSW, CI, docs | ✅ Done |
 | 1 | Design system (`/dev/ui`) and API contract + full mock | ✅ Done |
-| 2 | Client flow with fake vision | Next |
+| 2 | Client flow with fake vision | ✅ Done |
 | 3 | Real capture pipeline | |
-| 4 | Measurement module | |
+| 4 | Measurement module | ✅ Done |
 | 5 | Tailor dashboard | |
 | 6 | Admin and study | |
 | 7 | Hardening | |

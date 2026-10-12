@@ -4,18 +4,18 @@ The "Test" column is filled in as each test is written. *Planned* means not buil
 
 | Requirement | Prompt section | Primary test | Test (actual) |
 |---|---|---|---|
-| FR-01 PWA, offline capture | 5, 9.6, 9.14, 12 | e2e offline capture | `tests/e2e/smoke.spec.ts` offline banner (partial); planned |
-| FR-02 code, height, sex, fit; refuse without code | 9.2 | unit validators; e2e | `tests/unit/validate.test.ts`; `CodeInput` mask in `tests/e2e/components.spec.ts`; screen e2e planned (Phase 2) |
-| FR-03 bilingual consent, version recorded | 9.3, 16 | e2e EN/SW consent | planned (Phase 2) |
-| FR-04 live checks, shutter disabled until pass | 9.7, 9.8, 10.3 | unit checks; e2e fixtures | planned (Phase 2–3) |
-| FR-05 5-frame burst, medians | 10.4 | unit | planned (Phase 3) |
-| FR-06 marker + stature scales, 4% rule | 11.1, 9.9 | unit; e2e retake | planned (Phase 4) |
-| FR-07 eight measurements by Table 3.1 | 11.2 | unit synthetic body | planned (Phase 4) |
-| FR-08 flags | 11.3, 9.10 | unit; e2e review | planned (Phase 4) |
-| FR-09 frames discarded; no image stored/sent | 2.1, 10.2, 19 | memory + network privacy tests | `tests/unit/imageGuard.test.ts` (storage half); network/memory planned |
-| FR-10 IndexedDB profile | 12.1 | unit; e2e reload | `tests/unit/imageGuard.test.ts` (schema v1); planned |
-| FR-11 sync, LWW, conflicts shown | 12.2, 13.10 | unit sync; e2e conflict | contract: `tests/unit/contract.test.ts` (409, conflict list/resolve); client sync planned (Phase 2) |
-| FR-12 review, retake, save/discard | 9.10 | e2e | planned |
+| FR-01 PWA, offline capture | 5, 9.6, 9.14, 12 | e2e offline capture | `client.spec.ts` save-while-send-fails → pending → sends; offline shell on the production build in Phase 7 |
+| FR-02 code, height, sex, fit; refuse without code | 9.2 | unit validators; e2e | `validate.test.ts`; `client.spec.ts` details form (mask, range, feet), full flows |
+| FR-03 bilingual consent, version recorded | 9.3, 16 | e2e EN/SW consent | `client.spec.ts` consent required + version line; full flow EN and SW |
+| FR-04 live checks, shutter disabled until pass | 9.7, 9.8, 10.3 | unit checks; e2e fixtures | `capture/checks.test.ts` (24); `client.spec.ts` every correction in priority order + shutter disabled |
+| FR-05 5-frame burst, medians | 10.4 | unit | `capture/stateMachine.test.ts` (burst states); `client.spec.ts` bad burst → retry; real medians in Phase 3 |
+| FR-06 marker + stature scales, 4% rule | 11.1, 9.9 | unit; e2e retake | `measure/scale.test.ts`; `client.spec.ts` scale disagreement → retake front |
+| FR-07 eight measurements by Table 3.1 | 11.2 | unit synthetic body | `measure/profile.test.ts` full synthetic bodies (6 bodies, ±1.5% lengths / ±3% girths); `sites.test.ts` |
+| FR-08 flags | 11.3, 9.10 | unit; e2e review | `measure/flags.test.ts`; `client.spec.ts` inside leg Not measured with reason |
+| FR-09 frames discarded; no image stored/sent | 2.1, 10.2, 19 | memory + network privacy tests | `imageGuard.test.ts`; `client.spec.ts` network interception, buffers released, IndexedDB dump |
+| FR-10 IndexedDB profile | 12.1 | unit; e2e reload | `sync.test.ts` (save, version); `client.spec.ts` My measurements survives reload; nothing image-like in IndexedDB |
+| FR-11 sync, LWW, conflicts shown | 12.2, 13.10 | unit sync; e2e conflict | `sync.test.ts` (201/404/409/422/backoff/24 h/online); contract; tailor conflicts screen in Phase 5 |
+| FR-12 review, retake, save/discard | 9.10 | e2e | `client.spec.ts` full flows, retake, delete my data |
 | FR-13 tailor accounts, expiring tokens | 13.1, 19 | e2e login/expiry | `tests/unit/auth.test.ts` (transport, expiry, guards); contract login/rate-limit; screens planned (Phase 5) |
 | FR-14 issue code, display name, height | 13.3 | e2e | contract `POST /clients`, rotate; screens planned (Phase 5) |
 | FR-15 client list, dated profiles, sheet with flags | 13.2, 13.4, 13.5 | e2e | planned |
@@ -29,17 +29,17 @@ The "Test" column is filled in as each test is written. *Planned* means not buil
 | FR-23 blind tape entry | 15.2 | e2e (no system values in DOM) | contract (locked, out-of-order, values not echoed, measurer 403 on profiles) |
 | NFR-01 ≤ 20 s | 18, 21.2 | device log | planned |
 | NFR-02 ≤ 30 MB first load | 18 | Lighthouse / network | planned |
-| NFR-03 offline capture and auto-sync | 12.2 | e2e offline | planned |
+| NFR-03 offline capture and auto-sync | 12.2 | e2e offline | `sync.test.ts` online wake; `client.spec.ts` pending → sent |
 | NFR-04 accuracy tiers | 11 | validation study (outside repo) | n/a |
 | NFR-05 SUS ≥ 68 | 13 | tailor study (outside repo) | n/a |
 | NFR-06 EN/SW everywhere | 16 | i18n parity test | `tests/unit/i18n.test.ts` |
 | NFR-07 ≥ 80% self-capture within 3 attempts | 9.6–9.8, 10.6 | pilot logs | n/a |
-| NFR-08 no profile lost | 12.2 | fault-injection e2e | planned |
+| NFR-08 no profile lost | 12.2 | fault-injection e2e | `client.spec.ts` send fails → reload → still pending → sent; `sync.test.ts` write-before-Saved |
 | NFR-09 TLS, token expiry | 19 | config review | `docs/api-contract.md` headers (partial) |
-| NFR-10 no image leaves phone | 2.1, 19 | network privacy test | planned (Phase 3) |
+| NFR-10 no image leaves phone | 2.1, 19 | network privacy test | `client.spec.ts` network interception (fake vision); rerun with real pipeline in Phase 3 |
 | NFR-11 append-only audit (server) | 13.11 | contract note | `docs/api-contract.md` audit section |
 | NFR-12 platform floor (C3) | 2.2, 9.4 | device log | planned |
-| NFR-13 versioned rules, unit tests | 11.2, 11.4 | coverage ≥ 90% in measure/ | planned (Phase 4) |
+| NFR-13 versioned rules, unit tests | 11.2, 11.4 | coverage ≥ 90% in measure/ | `measure/rules.test.ts`; coverage 99.25% statements of `src/lib/measure` (CI gate) |
 | NFR-14 licences | 2.3 | `LICENSES.md` check in CI | `scripts/licenses.mjs` (CI) |
 | WCAG 2.2 AA contrast | 8.2, 17 | unit | `tests/unit/contrast.test.ts` |
-| Accessibility (axe) | 17 | axe on every route | `tests/e2e/smoke.spec.ts` (welcome), `tests/e2e/components.spec.ts` (all components, EN + SW) |
+| Accessibility (axe) | 17 | axe on every route | `smoke.spec.ts`, `components.spec.ts`, `client.spec.ts` (every client route incl. capture and review, EN + SW) |

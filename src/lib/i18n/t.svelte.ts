@@ -50,7 +50,7 @@ export function formatDate(
 ) {
 	return new Intl.DateTimeFormat(INTL_LOCALE[locale.lang], { timeZone: TIME_ZONE, ...opts }).format(
 		// Formatting only; this Date is never mutated or observed.
-		// eslint-disable-next-line svelte/prefer-svelte-reactivity
+
 		typeof iso === 'string' ? new Date(iso) : iso
 	);
 }

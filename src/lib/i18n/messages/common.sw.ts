@@ -42,7 +42,6 @@ export const sw: Record<keyof typeof en, string> = {
 
 	'welcome.title': 'Karibu',
 	'welcome.chooseLanguage': 'Chagua lugha yako',
-	'welcome.phase0Note': 'Virtual Tailor inajengwa. Hatua za kupima zitakuja baadaye.',
 
 	'common.optional': 'si lazima',
 	'common.required': 'lazima',

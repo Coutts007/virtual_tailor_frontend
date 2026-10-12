@@ -26,6 +26,11 @@ export default ts.config(
 		}
 	},
 	{
+		// Logic modules use plain Date for timestamps that are never reactive state.
+		files: ['src/lib/**/*.svelte.ts'],
+		rules: { 'svelte/prefer-svelte-reactivity': 'off' }
+	},
+	{
 		// Section 19: no console logging of personal data in production code.
 		files: ['src/**/*.{ts,svelte}'],
 		rules: {

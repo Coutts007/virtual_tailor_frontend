@@ -9,3 +9,6 @@ node_modules
 /test-results
 /coverage
 vite.config.*.timestamp-*
+
+# MSW worker must never ship from static/ (served by a dev middleware from mocks/public)
+/static/mockServiceWorker.js

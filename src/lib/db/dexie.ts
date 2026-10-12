@@ -6,6 +6,9 @@ import { assertNoImageData } from './imageGuard';
 export interface LocalProfile extends MeasurementProfile {
 	status: 'final';
 	local_status?: 'draft' | 'final' | 'deleted';
+	/** Shown on the Saved / My measurements screens (Section 12.2). */
+	sync_note?: 'invalid' | 'stale' | null;
+	synced_at?: string;
 }
 
 export type PendingOperation = 'create' | 'delete' | 'withdraw';
@@ -17,6 +20,8 @@ export interface PendingSync {
 	attempts: number;
 	next_attempt_at: string;
 	last_error?: string;
+	/** For delete / withdraw operations: proof of possession (decision 3). */
+	deletion?: { client_code: string; profile_ids: string[]; reason: 'delete' | 'withdraw_consent' };
 }
 
 export interface SettingRow {
