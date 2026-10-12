@@ -4,7 +4,7 @@
 	import { onMount, type Snippet } from 'svelte';
 	import { dev } from '$app/environment';
 	import { locale, t } from '$lib/i18n/t.svelte';
-	import { network, watchNetwork } from '$lib/device/network.svelte';
+	import { watchNetwork } from '$lib/device/network.svelte';
 	import { startWorkers, swState, applyUpdate } from '$lib/sw/register.svelte';
 	import Banner from '$lib/ui/Banner.svelte';
 	import Toaster from '$lib/ui/Toaster.svelte';
@@ -24,9 +24,6 @@
 	});
 </script>
 
-{#if !network.online}
-	<Banner tone="offline">{t('banner.offline')}</Banner>
-{/if}
 {#if dev && locale.lang === 'sw'}
 	<Banner tone="warning" live="off">{t('banner.unreviewedSw')}</Banner>
 {/if}

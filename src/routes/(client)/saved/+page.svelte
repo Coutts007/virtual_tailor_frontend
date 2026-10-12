@@ -7,7 +7,7 @@
 	import { changeCode, clearThisPhone, getProfile } from '$lib/db/profiles';
 	import type { LocalProfile } from '$lib/db/dexie';
 	import { validateClientCode } from '$lib/domain/validate';
-	import { clearDetails } from '$lib/client/flow.svelte';
+	import { capture, clearDetails } from '$lib/client/flow.svelte';
 	import { install, isIos, promptInstall } from '$lib/client/install.svelte';
 	import { syncNow, syncState } from '$lib/client/syncState.svelte';
 	import ClientHeader from '$lib/client/ClientHeader.svelte';
@@ -26,6 +26,8 @@
 	let clearOpen = $state(false);
 	let cleared = $state(false);
 	let ios = $state(false);
+	/** Study (15.1): remembered across the save so the next-set shortcut can show. */
+	const study = capture.study;
 
 	async function reload() {
 		const id = page.url.searchParams.get('id');
@@ -116,6 +118,24 @@
 				{:else}<p>{t('saved.installIos')}</p>{/if}
 			</section>
 		{/if}
+	{/if}
+
+	{#if study}
+		<section class="study">
+			<p class="ok">
+				{t('study.cap.savedStudy', { set: study.set_no, code: study.participant_code })}
+			</p>
+			{#if study.set_no < 3}
+				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -- query string on a resolved path -->
+				<Button
+					href={`${resolve('/study/capture')}?participant=${study.participant_code}&set=${study.set_no + 1}`}
+				>
+					{t('study.cap.nextSet', { set: study.set_no + 1, code: study.participant_code })}
+				</Button>
+			{:else}
+				<p>{t('study.cap.allSets', { code: study.participant_code })}</p>
+			{/if}
+		</section>
 	{/if}
 
 	<section class="shared">

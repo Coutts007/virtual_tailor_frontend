@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import { t } from '$lib/i18n/t.svelte';
 	import Banner from '$lib/ui/Banner.svelte';
+	import { network } from '$lib/device/network.svelte';
 	import { loadDraft } from '$lib/client/flow.svelte';
 	import { captureInstallPrompt } from '$lib/client/install.svelte';
 	import { startClientSync, syncState } from '$lib/client/syncState.svelte';
@@ -19,6 +20,9 @@
 </script>
 
 {#if !onCapture}
+	{#if !network.online}
+		<Banner tone="offline">{t('banner.offline')}</Banner>
+	{/if}
 	{#if !syncState.persisted && syncState.pending > 0}
 		<Banner tone="warning">{t('banner.storage')}</Banner>
 	{:else if syncState.stale}

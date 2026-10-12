@@ -50,8 +50,47 @@ export function setLatency(min: number, max: number) {
 	latency = { min, max };
 }
 
-let db: Seed = createSeed();
+/*
+ * In the browser the mock keeps its data in sessionStorage so a page reload
+ * behaves like a real server (logins and changes survive). Node tests keep it
+ * in memory only.
+ */
+const STORE_KEY = 'vt.mock.db';
+const MAPS = ['conflicts', 'tokens', 'loginAttempts'] as const;
+
+function storage(): Storage | null {
+	try {
+		return typeof window !== 'undefined' ? window.sessionStorage : null;
+	} catch {
+		return null;
+	}
+}
+function saveDb() {
+	const s = storage();
+	if (!s) return;
+	const plain: Record<string, unknown> = { ...db };
+	for (const k of MAPS) plain[k] = [...db[k].entries()];
+	try {
+		s.setItem(STORE_KEY, JSON.stringify(plain));
+	} catch {
+		/* quota: keep in memory */
+	}
+}
+function loadDb(): Seed | null {
+	try {
+		const raw = storage()?.getItem(STORE_KEY);
+		if (!raw) return null;
+		const plain = JSON.parse(raw) as Record<string, unknown>;
+		for (const k of MAPS) plain[k] = new Map(plain[k] as [string, unknown][]);
+		return plain as unknown as Seed;
+	} catch {
+		return null;
+	}
+}
+
+let db: Seed = loadDb() ?? createSeed();
 export function resetMockDb(now?: number) {
+	storage()?.removeItem(STORE_KEY);
 	db = createSeed(now);
 }
 export function mockDb(): Seed {
@@ -113,7 +152,10 @@ function route(key: string, resolver: HttpResponseResolver): HttpResponseResolve
 				forced === 429 ? { 'Retry-After': '30' } : {}
 			);
 		}
-		return resolver(info);
+		const out = await resolver(info);
+		// GETs can write too (e.g. profile_view audit entries).
+		saveDb();
+		return out;
 	};
 }
 

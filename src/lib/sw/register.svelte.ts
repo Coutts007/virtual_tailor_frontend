@@ -1,5 +1,6 @@
 import { dev } from '$app/environment';
 import { API_MODE } from '$lib/api';
+import { mockReady } from '$lib/api/mockReady';
 
 /** Shared update state for the "new version ready" toast (Section 9.14). */
 export const swState = $state<{ updateReady: boolean; waiting: ServiceWorker | null }>({
@@ -15,8 +16,7 @@ export async function startWorkers(): Promise<void> {
 	if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return;
 
 	if (dev && API_MODE === 'mock') {
-		const { startMockWorker } = await import('../../../mocks/browser');
-		await startMockWorker();
+		await mockReady();
 		return;
 	}
 	if (dev) return;

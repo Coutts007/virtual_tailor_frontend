@@ -4,7 +4,7 @@ The client-side tier of **Virtual Tailor (VT)**, a final-year Computer Science p
 
 The full build specification is `../VT_frontend_agent_prompt.md`. Owner decisions are in `docs/decisions.md`.
 
-> **Status:** Phases 0–4 complete (client flow, real capture pipeline, measurement module). Device tests on the reference phones are still to be run. See "Phases" below.
+> **Status:** Phases 0–6 complete (client app, real capture pipeline, measurement module, tailor dashboard, admin and study). Phase 7 (hardening) in progress. Device tests on the reference phones are still to be run. See "Phases" below.
 
 ## Requirements
 
@@ -127,6 +127,6 @@ Note that the capture thresholds in `src/lib/capture/config.ts` are hashed separ
 | 2 | Client flow with fake vision | ✅ Done |
 | 3 | Real capture pipeline | ✅ Done (device tests pending) |
 | 4 | Measurement module | ✅ Done |
-| 5 | Tailor dashboard | |
-| 6 | Admin and study | |
+| 5 | Tailor dashboard | ✅ Done |
+| 6 | Admin and study | ✅ Done |
 | 7 | Hardening | |

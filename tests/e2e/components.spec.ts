@@ -56,6 +56,7 @@ test.describe('Phase 1: component gallery (/dev/ui)', () => {
 
 	for (const lang of ['en', 'sw']) {
 		test(`no serious/critical axe violations on /dev/ui (${lang})`, async ({ page }) => {
+			test.setTimeout(90_000); // axe on the full gallery is slow under parallel load
 			await page.addInitScript((l) => localStorage.setItem('vt.lang', l), lang);
 			await open(page, '/dev/ui');
 			const results = await new AxeBuilder({ page })

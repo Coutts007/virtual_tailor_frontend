@@ -4,7 +4,7 @@ First-draft Kiswahili written by the agent. A native speaker sets `reviewed` to 
 
 Guidance: short, concrete sentences; read at about an 11-year-old level; avoid literal translation of idioms.
 
-**Progress:** 0 of 433 reviewed.
+**Progress:** 0 of 908 reviewed.
 
 The consent text and protocol card are long-form documents under `src/lib/i18n/consent/` and are reviewed as whole documents (Phase 2).
 
@@ -443,3 +443,478 @@ The consent text and protocol card are long-form documents under `src/lib/i18n/c
 | `fallback.take` | Take photo | Piga picha | false |  |
 | `fallback.taken` | Photo ready | Picha iko tayari | false |  |
 | `fallback.measure` | Work out measurements | Kokotoa vipimo | false |  |
+| `dash.nav` | Main menu | Menyu kuu | false |  |
+| `dash.account` | Account | Akaunti | false |  |
+| `dash.settings` | Settings | Mipangilio | false |  |
+| `dash.signOut` | Sign out | Ondoka | false |  |
+| `dash.offline` | You are offline. You can look at what is already loaded; changes are off until you reconnect. | Huna mtandao. Unaweza kuangalia kilichopakiwa tayari; mabadiliko yamezimwa hadi uunganishe tena. | false |  |
+| `dash.offlineDisabled` | Changes are off while you are offline. | Mabadiliko yamezimwa ukiwa nje ya mtandao. | false |  |
+| `auth.email` | Email | Barua pepe | false |  |
+| `auth.password` | Password | Nenosiri | false |  |
+| `auth.login.title` | Sign in | Ingia | false |  |
+| `auth.login.submit` | Sign in | Ingia | false |  |
+| `auth.login.register` | Register as a tailor | Jisajili kama fundi | false |  |
+| `auth.sessionEnded` | Your session ended. Please sign in again. | Muda wako umeisha. Tafadhali ingia tena. | false |  |
+| `auth.error.invalid` | The email or password is not right. | Barua pepe au nenosiri si sahihi. | false |  |
+| `auth.error.pending` | Your account is still waiting for approval. | Akaunti yako bado inasubiri kuidhinishwa. | false |  |
+| `auth.error.disabled` | This account is switched off. Contact the Virtual Tailor administrator. | Akaunti hii imezimwa. Wasiliana na msimamizi wa Virtual Tailor. | false |  |
+| `auth.error.rateLimited` | Too many tries. Please wait before trying again. | Majaribio mengi mno. Tafadhali subiri kabla ya kujaribu tena. | false |  |
+| `auth.error.waitSeconds` | {count, plural, one {Wait # second.} other {Wait # seconds.}} | {count, plural, one {Subiri sekunde #.} other {Subiri sekunde #.}} | false |  |
+| `auth.register.title` | Register as a tailor | Jisajili kama fundi | false |  |
+| `auth.register.intro` | We check every new tailor account before it can be used. | Tunakagua kila akaunti mpya ya fundi kabla ya kutumika. | false |  |
+| `auth.register.emailTaken` | This email cannot be used. Try another or sign in. | Barua pepe hii haiwezi kutumika. Jaribu nyingine au uingie. | false |  |
+| `auth.register.passwordHint` | At least 10 characters. A short sentence is easy to remember. | Angalau herufi 10. Sentensi fupi ni rahisi kukumbuka. | false |  |
+| `auth.register.business` | Business name | Jina la biashara | false |  |
+| `auth.register.phone` | Phone | Simu | false |  |
+| `auth.register.phoneHint` | Kenyan mobile number, for example 0712 345 678 | Nambari ya simu ya Kenya, kwa mfano 0712 345 678 | false |  |
+| `auth.register.area` | Area | Eneo | false |  |
+| `auth.register.areaHint` | For example Gikomba | Kwa mfano Gikomba | false |  |
+| `auth.register.language` | Preferred language | Lugha unayopendelea | false |  |
+| `auth.register.submit` | Register | Jisajili | false |  |
+| `auth.register.haveAccount` | I already have an account | Tayari nina akaunti | false |  |
+| `auth.pending.title` | Waiting for approval | Inasubiri kuidhinishwa | false |  |
+| `auth.pending.body` | Your account is waiting for approval. We will let you know. | Akaunti yako inasubiri kuidhinishwa. Tutakujulisha. | false |  |
+| `auth.pending.next` | After approval you can sign in and issue codes to your clients. | Baada ya kuidhinishwa unaweza kuingia na kuwapa wateja wako nambari. | false |  |
+| `auth.pending.back` | Back to sign in | Rudi kwenye kuingia | false |  |
+| `tailor.nav.clients` | Clients | Wateja | false |  |
+| `tailor.nav.orders` | Orders | Oda | false |  |
+| `tailor.nav.audit` | Audit | Kumbukumbu | false |  |
+| `tailor.nav.settings` | Settings | Mipangilio | false |  |
+| `tailor.flags.good` | {count} good | {count} sawa | false |  |
+| `tailor.flags.check` | {count, plural, one {# check} other {# checks}} | {count, plural, one {# kagua} other {# kagua}} | false |  |
+| `tailor.flags.fail` | {count} not measured | {count} hazijapimwa | false |  |
+| `tailor.clients.title` | Clients | Wateja | false |  |
+| `tailor.clients.searchHint` | Code or name | Nambari au jina | false |  |
+| `tailor.clients.sort` | Sort by | Panga kwa | false |  |
+| `tailor.clients.sortLast` | Last measured | Kipimo cha mwisho | false |  |
+| `tailor.clients.sortCode` | Code | Nambari | false |  |
+| `tailor.clients.sortName` | Name | Jina | false |  |
+| `tailor.clients.filters` | Show only | Onyesha tu | false |  |
+| `tailor.clients.filterNew` | Has new measurements | Ana vipimo vipya | false |  |
+| `tailor.clients.filterFlags` | Has flags | Ana alama | false |  |
+| `tailor.clients.filterNone` | No measurements yet | Bado hana vipimo | false |  |
+| `tailor.clients.code` | Code | Nambari | false |  |
+| `tailor.clients.name` | Name | Jina | false |  |
+| `tailor.clients.lastCapture` | Last measured | Kipimo cha mwisho | false |  |
+| `tailor.clients.sync` | Status | Hali | false |  |
+| `tailor.clients.flags` | Flags | Alama | false |  |
+| `tailor.clients.openOrders` | Open orders | Oda zilizo wazi | false |  |
+| `tailor.clients.never` | Not yet | Bado | false |  |
+| `tailor.clients.count` | {count, plural, one {# client} other {# clients}} | {count, plural, one {Mteja #} other {Wateja #}} | false |  |
+| `tailor.clients.noMatch` | No clients match. | Hakuna mteja anayelingana. | false |  |
+| `tailor.clients.emptyTitle` | No clients yet. | Bado huna wateja. | false |  |
+| `tailor.clients.emptyBody` | Issue a code and send it to your client on WhatsApp. | Toa nambari na umtumie mteja wako kwa WhatsApp. | false |  |
+| `tailor.clients.newCode` | New client code | Nambari mpya ya mteja | false |  |
+| `tailor.issue.title` | Issue a client code | Toa nambari ya mteja | false |  |
+| `tailor.issue.intro` | The client uses this code to send you their measurements. | Mteja atatumia nambari hii kukutumia vipimo vyake. | false |  |
+| `tailor.issue.name` | Display name | Jina la kuonyesha | false |  |
+| `tailor.issue.nameHint` | Only you see this. Leave empty to keep the client anonymous. | Ni wewe tu unayeliona. Acha wazi ili mteja abaki bila jina. | false |  |
+| `tailor.issue.height` | Measured height | Urefu uliopimwa | false |  |
+| `tailor.issue.heightHint` | Measure against a wall without shoes, if the client is here. | Pima ukutani bila viatu, kama mteja yupo hapa. | false |  |
+| `tailor.issue.submit` | Issue code | Toa nambari | false |  |
+| `tailor.issue.readyTitle` | Code ready | Nambari iko tayari | false |  |
+| `tailor.issue.codeLabel` | Client code | Nambari ya mteja | false |  |
+| `tailor.issue.qrLabel` | QR code to open Virtual Tailor with code {code} | Msimbo wa QR wa kufungua Virtual Tailor kwa nambari {code} | false |  |
+| `tailor.issue.messageLang` | Message language | Lugha ya ujumbe | false |  |
+| `tailor.issue.message` | Hello! Please measure yourself for your order with Virtual Tailor: {link}. Your code is {code}. You will need: fitted clothes, a measuring sheet (print it or collect from me), and a chair to stand your phone on. Your photos stay on your phone. | Habari! Tafadhali jipime kwa ajili ya oda yako kwa Virtual Tailor: {link}. Nambari yako ni {code}. Utahitaji: nguo zinazokubana, karatasi ya kupimia (ichapishe au uichukue kwangu), na kiti cha kusimamisha simu yako. Picha zako zinabaki kwenye simu yako. | false |  |
+| `tailor.issue.whatsapp` | Send on WhatsApp | Tuma kwa WhatsApp | false |  |
+| `tailor.issue.copy` | Copy link | Nakili kiungo | false |  |
+| `tailor.issue.copyFailed` | Could not copy. Select the link and copy it. | Imeshindwa kunakili. Chagua kiungo kisha unakili. | false |  |
+| `tailor.issue.print` | Print card | Chapisha kadi | false |  |
+| `tailor.issue.openClient` | Open client | Fungua mteja | false |  |
+| `tailor.issue.another` | Issue another code | Toa nambari nyingine | false |  |
+| `tailor.client.title` | Client | Mteja | false |  |
+| `tailor.client.displayName` | Display name | Jina la kuonyesha | false |  |
+| `tailor.client.height` | Height | Urefu | false |  |
+| `tailor.client.created` | Created | Iliundwa | false |  |
+| `tailor.client.newerOnPhone` | Newer measurements on client's phone | Vipimo vipya viko kwenye simu ya mteja | false |  |
+| `tailor.client.newOrderLatest` | New order from latest profile | Oda mpya kutoka vipimo vya karibuni | false |  |
+| `tailor.client.rotate` | Issue new code | Toa nambari mpya | false |  |
+| `tailor.client.rotateTitle` | Issue a new code? | Toa nambari mpya? | false |  |
+| `tailor.client.rotateBody` | The old code {code} will stop working. Send the new code to your client. | Nambari ya zamani {code} itaacha kufanya kazi. Mtumie mteja wako nambari mpya. | false |  |
+| `tailor.client.rotateConfirm` | Issue new code | Toa nambari mpya | false |  |
+| `tailor.client.rotated` | New code {code} is ready. | Nambari mpya {code} iko tayari. | false |  |
+| `tailor.client.delete` | Delete client data | Futa taarifa za mteja | false |  |
+| `tailor.client.deleteTitle` | Delete this client's data? | Futa taarifa za mteja huyu? | false |  |
+| `tailor.client.deleteBody` | This deletes the code, all measurements and collected orders for this client. It cannot be undone. | Hii inafuta nambari, vipimo vyote na oda zilizochukuliwa za mteja huyu. Haiwezi kurudishwa. | false |  |
+| `tailor.client.deleteType` | Type the code {code} to confirm | Andika nambari {code} kuthibitisha | false |  |
+| `tailor.client.deleteConfirm` | Delete | Futa | false |  |
+| `tailor.client.deleteHasOrders` | This client has orders that are not collected yet. Close or collect those orders first. | Mteja huyu ana oda ambazo bado hazijachukuliwa. Funga au kabidhi oda hizo kwanza. | false |  |
+| `tailor.client.goOrders` | Go to orders | Nenda kwenye oda | false |  |
+| `tailor.client.deleted` | Client data deleted. | Taarifa za mteja zimefutwa. | false |  |
+| `tailor.client.profiles` | Measurements | Vipimo | false |  |
+| `tailor.client.noProfiles` | No measurements yet | Bado hakuna vipimo | false |  |
+| `tailor.client.noProfilesBody` | When the client measures with the code, the measurements appear here. | Mteja akijipima kwa nambari hii, vipimo vitaonekana hapa. | false |  |
+| `tailor.client.profileVersion` | Version {version} | Toleo {version} | false |  |
+| `tailor.client.orders` | Orders | Oda | false |  |
+| `tailor.client.noOrders` | No orders for this client yet. | Bado hakuna oda za mteja huyu. | false |  |
+| `tailor.mode.self` | Self (alone) | Peke yake | false |  |
+| `tailor.mode.assisted` | With a helper | Na msaidizi | false |  |
+| `tailor.sheet.title` | Measurement sheet | Karatasi ya vipimo | false |  |
+| `tailor.sheet.heading` | {code} · version {version} | {code} · toleo {version} | false |  |
+| `tailor.sheet.model` | model {variant} | modeli {variant} | false |  |
+| `tailor.sheet.rules` | rules {version} | kanuni {version} | false |  |
+| `tailor.sheet.confirmAtFitting` | Some measurements are flagged. Confirm these at the fitting. | Baadhi ya vipimo vina alama. Vithibitishe wakati wa kujaribisha nguo. | false |  |
+| `tailor.sheet.site` | Measurement | Kipimo | false |  |
+| `tailor.sheet.value` | Value | Thamani | false |  |
+| `tailor.sheet.flag` | Flag | Alama | false |  |
+| `tailor.sheet.method` | Method | Njia | false |  |
+| `tailor.sheet.methodAuto` | Auto | Otomatiki | false |  |
+| `tailor.sheet.methodOverride` | Overridden | Imebadilishwa | false |  |
+| `tailor.sheet.heightCheck` | Height entered: {entered} · Estimated from photos: {estimated} | Urefu ulioandikwa: {entered} · Uliokadiriwa kutoka picha: {estimated} | false |  |
+| `tailor.sheet.diagram` | Diagram with numbered measurement places | Mchoro wenye nambari za sehemu za vipimo | false |  |
+| `tailor.sheet.checks` | Capture checks | Ukaguzi wa picha | false |  |
+| `tailor.sheet.check` | Check | Ukaguzi | false |  |
+| `tailor.sheet.scaleDiff` | Scale difference: {pct}% | Tofauti ya ukubwa: {pct}% | false |  |
+| `tailor.sheet.retakes` | {count, plural, =0 {No retakes} one {# retake} other {# retakes}} | {count, plural, =0 {Hakuna picha iliyorudiwa} one {Picha # ilirudiwa} other {Picha # zilirudiwa}} | false |  |
+| `tailor.sheet.fitDeclared` | Clothing: {fit} | Nguo: {fit} | false |  |
+| `tailor.sheet.newOrder` | New order from this profile | Oda mpya kutoka vipimo hivi | false |  |
+| `tailor.sheet.print` | Print measurements | Chapisha vipimo | false |  |
+| `tailor.check.pass` | Passed | Imepita | false |  |
+| `tailor.check.fail` | Failed | Imeshindwa | false |  |
+| `tailor.check.skipped` | Skipped | Imerukwa | false |  |
+| `tailor.checkName.level` | Level | Usawa | false |  |
+| `tailor.checkName.frame` | Whole body in frame | Mwili mzima kwenye picha | false |  |
+| `tailor.checkName.marker` | Sheet found | Karatasi imeonekana | false |  |
+| `tailor.checkName.symmetry` | Facing / profile | Kutazama / upande | false |  |
+| `tailor.checkName.arms` | Arms | Mikono | false |  |
+| `tailor.checkName.light` | Light | Mwanga | false |  |
+| `tailor.fit.fitted` | fitted | zinazobana | false |  |
+| `tailor.fit.loose` | loose | pana | false |  |
+| `tailor.orders.title` | Orders | Oda | false |  |
+| `tailor.orders.filter` | Filter by status | Chuja kwa hali | false |  |
+| `tailor.orders.showCollected` | Show collected | Onyesha zilizochukuliwa | false |  |
+| `tailor.orders.sort` | Sort by | Panga kwa | false |  |
+| `tailor.orders.sortDue` | Due date | Tarehe ya kukamilisha | false |  |
+| `tailor.orders.sortCreated` | Date created | Tarehe ya kuundwa | false |  |
+| `tailor.orders.due` | Due {date} | Itakamilika {date} | false |  |
+| `tailor.orders.overdue` | Overdue | Imechelewa | false |  |
+| `tailor.orders.flagged` | {count, plural, one {# flagged site} other {# flagged sites}} | {count, plural, one {Kipimo # kina alama} other {Vipimo # vina alama}} | false |  |
+| `tailor.orders.conflict` | Sync conflict: newer profile on phone | Mgongano: vipimo vipya viko kwenye simu | false |  |
+| `tailor.orders.sheet` | Sheet | Karatasi | false |  |
+| `tailor.orders.status` | Status | Hali | false |  |
+| `tailor.orders.new` | New order | Oda mpya | false |  |
+| `tailor.orders.emptyTitle` | No orders here. | Hakuna oda hapa. | false |  |
+| `tailor.orders.emptyBody` | Create an order from a client's measurements. | Unda oda kutoka vipimo vya mteja. | false |  |
+| `tailor.status.title` | Status of {no} | Hali ya {no} | false |  |
+| `tailor.status.current` | Current status | Hali ya sasa | false |  |
+| `tailor.status.backTitle` | Move the order back? | Rudisha oda nyuma? | false |  |
+| `tailor.status.backBody` | This moves the order back from {from} to {to}. | Hii inarudisha oda kutoka {from} hadi {to}. | false |  |
+| `tailor.status.backConfirm` | Move back | Rudisha | false |  |
+| `tailor.status.changed` | {no} is now {status}. | {no} sasa ni {status}. | false |  |
+| `tailor.order.title` | Order | Oda | false |  |
+| `tailor.order.newTitle` | New order | Oda mpya | false |  |
+| `tailor.order.pickClient` | Choose a client | Chagua mteja | false |  |
+| `tailor.order.pickProfile` | Choose measurements for {code} | Chagua vipimo vya {code} | false |  |
+| `tailor.order.otherClient` | Choose another client | Chagua mteja mwingine | false |  |
+| `tailor.order.noClientsWithProfiles` | No clients with measurements match. | Hakuna mteja mwenye vipimo anayelingana. | false |  |
+| `tailor.order.subline` | Client {client} · profile of {date}, v{version} | Mteja {client} · vipimo vya {date}, toleo {version} | false |  |
+| `tailor.order.changeProfile` | Change profile | Badilisha vipimo | false |  |
+| `tailor.order.garment` | Garment | Vazi | false |  |
+| `tailor.order.due` | Due date | Tarehe ya kukamilisha | false |  |
+| `tailor.order.dueHint` | Today or up to 180 days ahead | Leo au hadi siku 180 mbele | false |  |
+| `tailor.order.showAll` | Show all measurements | Onyesha vipimo vyote | false |  |
+| `tailor.order.applyPresets` | Apply my usual ease for {garment} | Tumia nafasi yangu ya kawaida kwa {garment} | false |  |
+| `tailor.order.presetsApplied` | Your usual ease was applied. | Nafasi yako ya kawaida imewekwa. | false |  |
+| `tailor.order.items` | Measurements | Vipimo | false |  |
+| `tailor.order.body` | Body | Mwili | false |  |
+| `tailor.order.ease` | Ease ({unit}) | Nafasi ({unit}) | false |  |
+| `tailor.order.finished` | Finished | Kamili | false |  |
+| `tailor.order.flaggedHelp` | Flagged: {reason} Confirm or override. | Ina alama: {reason} Thibitisha au badilisha. | false |  |
+| `tailor.order.override` | Override | Badilisha | false |  |
+| `tailor.order.undoOverride` | Use measured value | Tumia kipimo kilichopimwa | false |  |
+| `tailor.order.overridden` | Overridden | Imebadilishwa | false |  |
+| `tailor.order.confirmed` | Confirmed: {site} is right | Imethibitishwa: {site} ni sahihi | false |  |
+| `tailor.order.measureAtFitting` | Will measure {site} at fitting | Nitapima {site} wakati wa kujaribisha | false |  |
+| `tailor.order.atFitting` | At fitting | Wakati wa kujaribisha | false |  |
+| `tailor.order.overrideTitle` | Override {site} | Badilisha {site} | false |  |
+| `tailor.order.overrideValue` | New body value ({unit}) | Kipimo kipya cha mwili ({unit}) | false |  |
+| `tailor.order.overrideReason` | Reason | Sababu | false |  |
+| `tailor.order.overrideRecorded` | This change is recorded. | Mabadiliko haya yanarekodiwa. | false |  |
+| `tailor.order.overrideSave` | Use this value | Tumia kipimo hiki | false |  |
+| `tailor.order.notes` | Notes | Maelezo | false |  |
+| `tailor.order.notesHint` | {count} of 1,000 characters. Extra measurements go here. | Herufi {count} kati ya 1,000. Vipimo vya ziada viandikwe hapa. | false |  |
+| `tailor.order.notesPlaceholder` | Fabric, style, pockets… | Kitambaa, mtindo, mifuko… | false |  |
+| `tailor.order.notesTooLong` | Notes can have at most 1,000 characters. | Maelezo yasizidi herufi 1,000. | false |  |
+| `tailor.order.mustResolve` | {count, plural, one {Confirm or override # flagged measurement to save.} other {Confirm or override # flagged measurements to save.}} | {count, plural, one {Thibitisha au badilisha kipimo # chenye alama ili kuhifadhi.} other {Thibitisha au badilisha vipimo # vyenye alama ili kuhifadhi.}} | false |  |
+| `tailor.order.save` | Save order | Hifadhi oda | false |  |
+| `tailor.order.saved` | Order {no} saved | Oda {no} imehifadhiwa | false |  |
+| `tailor.order.updated` | Order {no} updated | Oda {no} imesasishwa | false |  |
+| `tailor.order.leaveTitle` | Leave without saving? | Ondoka bila kuhifadhi? | false |  |
+| `tailor.order.leaveBody` | The order has not been saved. Your changes will be lost. | Oda haijahifadhiwa. Mabadiliko yako yatapotea. | false |  |
+| `tailor.order.keepEditing` | Keep editing | Endelea kuhariri | false |  |
+| `tailor.order.discard` | Leave | Ondoka | false |  |
+| `tailor.order.statusHeading` | Status | Hali | false |  |
+| `tailor.order.moveTo` | Move to {status} | Hamishia {status} | false |  |
+| `tailor.order.changeStatus` | Change status | Badilisha hali | false |  |
+| `tailor.order.history` | Status history | Historia ya hali | false |  |
+| `tailor.order.editItems` | Edit measurements | Hariri vipimo | false |  |
+| `tailor.order.inProgressTitle` | Order in progress | Oda inaendelea | false |  |
+| `tailor.order.inProgressBody` | This order is already in progress — change anyway? Changes are recorded. | Oda hii tayari inaendelea — badilisha hata hivyo? Mabadiliko yanarekodiwa. | false |  |
+| `tailor.order.changeAnyway` | Change anyway | Badilisha hata hivyo | false |  |
+| `tailor.order.details` | Due date and notes | Tarehe na maelezo | false |  |
+| `tailor.order.saveDetails` | Save changes | Hifadhi mabadiliko | false |  |
+| `tailor.order.sheetShare` | Sheet & share | Karatasi na kushiriki | false |  |
+| `tailor.order.delete` | Delete order | Futa oda | false |  |
+| `tailor.order.deleteTitle` | Delete {no}? | Futa {no}? | false |  |
+| `tailor.order.deleteBody` | Only new orders can be deleted. This cannot be undone. | Ni oda mpya tu zinazoweza kufutwa. Haiwezi kurudishwa. | false |  |
+| `tailor.order.deleted` | Order {no} deleted | Oda {no} imefutwa | false |  |
+| `tailor.share.title` | Specification sheet | Karatasi ya maelezo | false |  |
+| `tailor.share.options` | Sheet options | Chaguo za karatasi | false |  |
+| `tailor.share.includeName` | Include client name ({name}) | Weka jina la mteja ({name}) | false |  |
+| `tailor.share.includeNameNote` | The name will appear on the sheet and in WhatsApp. This is recorded. | Jina litaonekana kwenye karatasi na WhatsApp. Hili linarekodiwa. | false |  |
+| `tailor.share.format` | Format | Muundo | false |  |
+| `tailor.share.png` | Picture (PNG) | Picha (PNG) | false |  |
+| `tailor.share.pngHint` | For WhatsApp | Kwa WhatsApp | false |  |
+| `tailor.share.pdf` | PDF | PDF | false |  |
+| `tailor.share.pdfHint` | For printing | Kwa kuchapisha | false |  |
+| `tailor.share.generate` | Generate sheet | Tengeneza karatasi | false |  |
+| `tailor.share.preview` | Preview | Hakiki | false |  |
+| `tailor.share.previewAlt` | Specification sheet for {no} | Karatasi ya maelezo ya {no} | false |  |
+| `tailor.share.text` | Message text | Maandishi ya ujumbe | false |  |
+| `tailor.share.whatsapp` | Share on WhatsApp | Shiriki kwa WhatsApp | false |  |
+| `tailor.share.downloadPdf` | Download PDF | Pakua PDF | false |  |
+| `tailor.share.print` | Print | Chapisha | false |  |
+| `tailor.share.attachHint` | The picture was downloaded. Attach the downloaded picture in WhatsApp. | Picha imepakuliwa. Ambatisha picha iliyopakuliwa kwenye WhatsApp. | false |  |
+| `tailor.conflicts.title` | Sync conflicts | Migongano ya vipimo | false |  |
+| `tailor.conflicts.intro` | A client's phone sent measurements that differ from the version you already have. Choose which to keep. | Simu ya mteja ilituma vipimo vinavyotofautiana na toleo ulilonalo. Chagua cha kubaki. | false |  |
+| `tailor.conflicts.badge` | {count, plural, one {# sync conflict} other {# sync conflicts}} | {count, plural, one {Mgongano #} other {Migongano #}} | false |  |
+| `tailor.conflicts.server` | Here (v{version}) | Hapa (toleo {version}) | false |  |
+| `tailor.conflicts.device` | From phone (v{version}) | Kutoka simu (toleo {version}) | false |  |
+| `tailor.conflicts.different` | different | tofauti | false |  |
+| `tailor.conflicts.useNewer` | Use the newer one | Tumia jipya | false |  |
+| `tailor.conflicts.keepServer` | Keep this version | Baki na toleo hili | false |  |
+| `tailor.conflicts.keptNewer` | Newer measurements kept for {code}. | Vipimo vipya vimebaki kwa {code}. | false |  |
+| `tailor.conflicts.keptServer` | Existing measurements kept for {code}. | Vipimo vilivyokuwepo vimebaki kwa {code}. | false |  |
+| `tailor.conflicts.empty` | No conflicts. | Hakuna migongano. | false |  |
+| `tailor.audit.title` | My activity | Shughuli zangu | false |  |
+| `tailor.audit.intro` | Everything you do with client data is recorded here. It cannot be changed. | Kila unachofanya na taarifa za wateja kinarekodiwa hapa. Hakiwezi kubadilishwa. | false |  |
+| `audit.filters` | Filters | Vichujio | false |  |
+| `audit.action` | Action | Kitendo | false |  |
+| `audit.any` | Any | Yoyote | false |  |
+| `audit.user` | User email | Barua pepe ya mtumiaji | false |  |
+| `audit.role` | Role | Jukumu | false |  |
+| `audit.roleTailor` | Tailor | Fundi | false |  |
+| `audit.roleAdmin` | Administrator | Msimamizi | false |  |
+| `audit.roleMeasurer` | Measurer | Mpimaji | false |  |
+| `audit.entity` | Item type | Aina ya kitu | false |  |
+| `audit.from` | From | Kuanzia | false |  |
+| `audit.to` | To | Hadi | false |  |
+| `audit.empty` | No activity matches. | Hakuna shughuli inayolingana. | false |  |
+| `tailor.settings.title` | Settings | Mipangilio | false |  |
+| `tailor.settings.preferences` | Preferences | Mapendeleo | false |  |
+| `tailor.settings.units` | Units | Vipimo | false |  |
+| `tailor.settings.unitsHint` | Measurements are always stored in millimetres. | Vipimo huhifadhiwa kwa milimita kila wakati. | false |  |
+| `tailor.settings.cm` | Centimetres | Sentimita | false |  |
+| `tailor.settings.in` | Inches | Inchi | false |  |
+| `tailor.settings.includeName` | Include client name on sheets by default | Weka jina la mteja kwenye karatasi kwa kawaida | false |  |
+| `tailor.settings.includeNameHint` | You can still change it for each sheet. | Bado unaweza kubadilisha kwa kila karatasi. | false |  |
+| `tailor.settings.business` | Business | Biashara | false |  |
+| `tailor.settings.presets` | Usual ease per garment | Nafasi ya kawaida kwa kila vazi | false |  |
+| `tailor.settings.presetsHint` | Used by "Apply my usual ease" on new orders. | Inatumika na "Tumia nafasi yangu ya kawaida" kwenye oda mpya. | false |  |
+| `tailor.settings.savePresets` | Save ease | Hifadhi nafasi | false |  |
+| `tailor.settings.presetsSaved` | Usual ease saved. | Nafasi ya kawaida imehifadhiwa. | false |  |
+| `tailor.settings.password` | Change password | Badilisha nenosiri | false |  |
+| `tailor.settings.currentPassword` | Current password | Nenosiri la sasa | false |  |
+| `tailor.settings.newPassword` | New password | Nenosiri jipya | false |  |
+| `tailor.settings.changePassword` | Change password | Badilisha nenosiri | false |  |
+| `tailor.settings.passwordChanged` | Password changed. | Nenosiri limebadilishwa. | false |  |
+| `tailor.settings.wrongPassword` | The current password is not right. | Nenosiri la sasa si sahihi. | false |  |
+| `tailor.settings.account` | Account | Akaunti | false |  |
+| `tailor.settings.privacy` | Privacy notice | Taarifa ya faragha | false |  |
+| `tailor.settings.saved` | Saved. | Imehifadhiwa. | false |  |
+| `tailor.settings.version` | App version {app} · rules version {rules} | Toleo la programu {app} · toleo la kanuni {rules} | false |  |
+| `admin.nav.accounts` | Accounts | Akaunti | false |  |
+| `admin.nav.audit` | Audit | Kumbukumbu | false |  |
+| `admin.nav.settings` | Settings | Mipangilio | false |  |
+| `admin.nav.study` | Study | Utafiti | false |  |
+| `admin.roleLabel` | Administrator | Msimamizi | false |  |
+| `admin.accounts.title` | Accounts | Akaunti | false |  |
+| `admin.accounts.tab.pending` | Pending | Zinasubiri | false |  |
+| `admin.accounts.tab.active` | Active | Hai | false |  |
+| `admin.accounts.tab.disabled` | Disabled | Zimezimwa | false |  |
+| `admin.accounts.empty.pending` | No accounts waiting for approval. | Hakuna akaunti zinazosubiri kuidhinishwa. | false |  |
+| `admin.accounts.empty.active` | No active accounts. | Hakuna akaunti hai. | false |  |
+| `admin.accounts.empty.disabled` | No disabled or rejected accounts. | Hakuna akaunti zilizozimwa au kukataliwa. | false |  |
+| `admin.accounts.status.pending` | Pending | Inasubiri | false |  |
+| `admin.accounts.status.active` | Active | Hai | false |  |
+| `admin.accounts.status.disabled` | Disabled | Imezimwa | false |  |
+| `admin.accounts.status.rejected` | Rejected | Imekataliwa | false |  |
+| `admin.accounts.select` | Select | Chagua | false |  |
+| `admin.accounts.selectOne` | Select {email} | Chagua {email} | false |  |
+| `admin.accounts.registered` | Registered | Ilisajiliwa | false |  |
+| `admin.accounts.actions` | Actions | Vitendo | false |  |
+| `admin.accounts.approve` | Approve | Idhinisha | false |  |
+| `admin.accounts.reject` | Reject | Kataa | false |  |
+| `admin.accounts.disable` | Disable | Zima | false |  |
+| `admin.accounts.enable` | Re-enable | Washa tena | false |  |
+| `admin.accounts.rejected` | rejected | imekataliwa | false |  |
+| `admin.accounts.bulkApprove` | {count, plural, one {Approve # selected} other {Approve # selected}} | {count, plural, one {Idhinisha # iliyochaguliwa} other {Idhinisha # zilizochaguliwa}} | false |  |
+| `admin.accounts.bulkDone` | {count, plural, one {# account approved.} other {# accounts approved.}} | {count, plural, one {Akaunti # imeidhinishwa.} other {Akaunti # zimeidhinishwa.}} | false |  |
+| `admin.accounts.rejectTitle` | Reject {email}? | Kataa {email}? | false |  |
+| `admin.accounts.reason` | Reason (shown in the audit log) | Sababu (inaonekana kwenye kumbukumbu) | false |  |
+| `admin.accounts.disableTitle` | Disable {email}? | Zima {email}? | false |  |
+| `admin.accounts.disableBody` | They will be signed out and cannot sign in until re-enabled. Their data is kept. | Ataondolewa na hawezi kuingia hadi akaunti iwashwe tena. Taarifa zake zinabaki. | false |  |
+| `admin.accounts.done.approve` | {email} approved. | {email} ameidhinishwa. | false |  |
+| `admin.accounts.done.reject` | {email} rejected. | {email} amekataliwa. | false |  |
+| `admin.accounts.done.disable` | {email} disabled. | {email} amezimwa. | false |  |
+| `admin.accounts.done.enable` | {email} re-enabled. | {email} amewashwa tena. | false |  |
+| `admin.measurer.title` | Study measurers | Wapimaji wa utafiti | false |  |
+| `admin.measurer.intro` | Measurer accounts can only enter tape readings. They never see the app's measurements. | Akaunti za wapimaji zinaweza kuweka usomaji wa tepu tu. Hawaoni vipimo vya programu kamwe. | false |  |
+| `admin.measurer.create` | Create measurer account | Unda akaunti ya mpimaji | false |  |
+| `admin.measurer.password` | Starting password | Nenosiri la kuanzia | false |  |
+| `admin.measurer.code` | Measurer code | Herufi ya mpimaji | false |  |
+| `admin.measurer.codeHint` | One letter, A to Z | Herufi moja, A hadi Z | false |  |
+| `admin.measurer.codeInvalid` | Use one letter from A to Z. | Tumia herufi moja kutoka A hadi Z. | false |  |
+| `admin.measurer.codeTaken` | Another measurer already has this code. | Mpimaji mwingine tayari ana herufi hii. | false |  |
+| `admin.measurer.trained` | Trained on | Alifunzwa tarehe | false |  |
+| `admin.measurer.trainedOn` | Trained {date} | Alifunzwa {date} | false |  |
+| `admin.measurer.created` | Measurer {code} created. | Mpimaji {code} ameundwa. | false |  |
+| `admin.measurer.empty` | No measurers yet. | Bado hakuna wapimaji. | false |  |
+| `admin.measurer.label` | Measurer {code} | Mpimaji {code} | false |  |
+| `admin.audit.title` | Audit log | Kumbukumbu za ukaguzi | false |  |
+| `admin.audit.intro` | All users. Entries cannot be changed or deleted. | Watumiaji wote. Rekodi haziwezi kubadilishwa wala kufutwa. | false |  |
+| `admin.audit.export` | Export CSV | Pakua CSV | false |  |
+| `admin.audit.exported` | Audit CSV downloaded. The export is recorded. | CSV ya kumbukumbu imepakuliwa. Upakuaji umerekodiwa. | false |  |
+| `admin.audit.when` | Time | Muda | false |  |
+| `admin.audit.summary` | Details | Maelezo | false |  |
+| `admin.audit.pages` | Pages | Kurasa | false |  |
+| `admin.settings.title` | Settings | Mipangilio | false |  |
+| `admin.settings.retention` | Data retention | Muda wa kuhifadhi taarifa | false |  |
+| `admin.settings.retentionLabel` | Keep client measurements for | Hifadhi vipimo vya wateja kwa | false |  |
+| `admin.settings.retentionHint` | Counted from the client's last order. Then the server deletes them. | Inahesabiwa kutoka oda ya mwisho ya mteja. Kisha seva inavifuta. | false |  |
+| `admin.settings.months` | months | miezi | false |  |
+| `admin.settings.saved` | Settings saved. The change is recorded. | Mipangilio imehifadhiwa. Mabadiliko yamerekodiwa. | false |  |
+| `admin.settings.studyMode` | Study mode | Hali ya utafiti | false |  |
+| `admin.settings.studyExplain` | Study mode shows the validation-study screens: participants, measurers, exports, study capture and tape entry for measurers. | Hali ya utafiti inaonyesha skrini za utafiti: washiriki, wapimaji, upakuaji, upigaji picha wa utafiti na uwekaji wa vipimo vya tepu. | false |  |
+| `admin.settings.studyOn` | Study mode is on | Hali ya utafiti imewashwa | false |  |
+| `admin.settings.studyOff` | Study mode is off | Hali ya utafiti imezimwa | false |  |
+| `admin.settings.turnOn` | Turn study mode on | Washa hali ya utafiti | false |  |
+| `admin.settings.turnOff` | Turn study mode off | Zima hali ya utafiti | false |  |
+| `admin.settings.turnOnTitle` | Turn study mode on? | Washa hali ya utafiti? | false |  |
+| `admin.settings.turnOffTitle` | Turn study mode off? | Zima hali ya utafiti? | false |  |
+| `admin.settings.turnOnBody` | Study screens will appear for you and for measurers. Client and tailor screens do not change. | Skrini za utafiti zitaonekana kwako na kwa wapimaji. Skrini za wateja na mafundi hazibadiliki. | false |  |
+| `admin.settings.turnOffBody` | Study screens will be hidden and measurers cannot enter readings. Study data is kept. | Skrini za utafiti zitafichwa na wapimaji hawawezi kuweka usomaji. Taarifa za utafiti zinabaki. | false |  |
+| `admin.settings.consent` | Consent text | Maandishi ya idhini | false |  |
+| `admin.settings.consentServed` | Consent version served: {version} | Toleo la idhini linalotumika: {version} | false |  |
+| `admin.settings.consentHint` | The consent version comes with each app release and cannot be changed here. | Toleo la idhini linakuja na kila toleo la programu na haliwezi kubadilishwa hapa. | false |  |
+| `admin.deletion.title` | Data deletion requests | Maombi ya kufuta taarifa | false |  |
+| `admin.deletion.intro` | Requests sent from clients' phones (delete my data, withdraw consent). | Maombi yaliyotumwa kutoka simu za wateja (futa taarifa zangu, ondoa idhini). | false |  |
+| `admin.deletion.received` | Received | Ilipokelewa | false |  |
+| `admin.deletion.reason` | Request | Ombi | false |  |
+| `admin.deletion.profiles` | Profiles | Vipimo | false |  |
+| `admin.deletion.status` | Status | Hali | false |  |
+| `admin.deletion.reason.delete` | Delete my data | Futa taarifa zangu | false |  |
+| `admin.deletion.reason.withdraw_consent` | Withdraw consent | Ondoa idhini | false |  |
+| `admin.deletion.status.received` | Received | Imepokelewa | false |  |
+| `admin.deletion.status.completed` | Completed | Imekamilika | false |  |
+| `admin.deletion.status.rejected` | Rejected | Imekataliwa | false |  |
+| `admin.deletion.empty` | No deletion requests. | Hakuna maombi ya kufuta. | false |  |
+| `admin.study.participants` | Participants | Washiriki | false |  |
+| `admin.study.measurers` | Measurers | Wapimaji | false |  |
+| `admin.study.exports` | Exports | Upakuaji | false |  |
+| `admin.study.capture` | Study capture | Picha za utafiti | false |  |
+| `admin.participants.title` | Study participants | Washiriki wa utafiti | false |  |
+| `admin.participants.enrol` | Enrol a participant | Sajili mshiriki | false |  |
+| `admin.participants.noPersonal` | Never enter a name, phone number or weight here. The paper key list stays on paper. | Usiweke jina, nambari ya simu wala uzito hapa. Orodha ya funguo inabaki kwenye karatasi. | false |  |
+| `admin.participants.code` | Participant code | Nambari ya mshiriki | false |  |
+| `admin.participants.codeHint` | P followed by three digits, for example P006 | P ikifuatiwa na tarakimu tatu, kwa mfano P006 | false |  |
+| `admin.participants.codeInvalid` | Use P and three digits, for example P006. | Tumia P na tarakimu tatu, kwa mfano P006. | false |  |
+| `admin.participants.codeTaken` | This participant code is already enrolled. | Nambari hii ya mshiriki tayari imesajiliwa. | false |  |
+| `admin.participants.sex` | Sex | Jinsia | false |  |
+| `admin.participants.female` | Female | Mwanamke | false |  |
+| `admin.participants.male` | Male | Mwanaume | false |  |
+| `admin.participants.age` | Age band | Kundi la umri | false |  |
+| `admin.participants.venue` | Venue | Mahali | false |  |
+| `admin.participants.enrolButton` | Enrol | Sajili | false |  |
+| `admin.participants.enrolled` | {code} enrolled with client code {client}. | {code} amesajiliwa kwa nambari ya mteja {client}. | false |  |
+| `admin.participants.list` | Enrolled | Waliosajiliwa | false |  |
+| `admin.participants.empty` | No participants yet. | Bado hakuna washiriki. | false |  |
+| `admin.participants.enrolledOn` | enrolled {date} | alisajiliwa {date} | false |  |
+| `admin.participants.sets` | Capture sets: {n} of 3 | Seti za picha: {n} kati ya 3 | false |  |
+| `admin.participants.readings` | Tape readings: {done} of 9 sites complete | Usomaji wa tepu: sehemu {done} kati ya 9 zimekamilika | false |  |
+| `admin.participants.startCapture` | Start set {set} | Anza seti {set} | false |  |
+| `admin.export.intro` | The server builds the files. Downloads are recorded in the audit log. | Seva inatengeneza faili. Upakuaji unarekodiwa kwenye kumbukumbu. | false |  |
+| `admin.export.captures` | Capture records | Rekodi za picha | false |  |
+| `admin.export.capturesHint` | One row per capture set with the Appendix E fields: checks, scales, the eight measurements with flags, timing, conditions and device. | Safu moja kwa kila seti yenye sehemu za Kiambatisho E: ukaguzi, ukubwa, vipimo vinane na alama, muda, mazingira na kifaa. | false |  |
+| `admin.export.capturesButton` | Download capture records (CSV) | Pakua rekodi za picha (CSV) | false |  |
+| `admin.export.reference` | Reference readings | Usomaji wa marejeo | false |  |
+| `admin.export.referenceHint` | One row per tape reading: participant, site, measurer, reading number, value in cm. | Safu moja kwa kila usomaji wa tepu: mshiriki, sehemu, mpimaji, nambari ya usomaji, thamani kwa sm. | false |  |
+| `admin.export.referenceButton` | Download reference readings (CSV) | Pakua usomaji wa marejeo (CSV) | false |  |
+| `admin.export.preparing` | Preparing the file… | Inatayarisha faili… | false |  |
+| `admin.export.done` | {rows, plural, one {Downloaded # row.} other {Downloaded # rows.}} | {rows, plural, one {Safu # imepakuliwa.} other {Safu # zimepakuliwa.}} | false |  |
+| `study.off` | Study mode is off. | Hali ya utafiti imezimwa. | false |  |
+| `study.ref.locked` | This reading is already saved and locked. Ask the administrator to correct it. | Usomaji huu tayari umehifadhiwa na kufungwa. Muombe msimamizi aurekebishe. | false |  |
+| `study.ref.title` | Tape readings | Usomaji wa tepu | false |  |
+| `study.ref.header` | Measurer {code} | Mpimaji {code} | false |  |
+| `study.ref.intro` | Enter your own tape readings. You will not see the app's values or another measurer's readings. | Weka usomaji wako wa tepu. Hutaona vipimo vya programu wala usomaji wa mpimaji mwingine. | false |  |
+| `study.ref.offline` | You are offline. Readings are kept on this device and sent when you reconnect. | Huna mtandao. Usomaji unahifadhiwa kwenye kifaa hiki na kutumwa ukiunganisha tena. | false |  |
+| `study.ref.participant` | Participant code | Nambari ya mshiriki | false |  |
+| `study.ref.participantHint` | For example P001 | Kwa mfano P001 | false |  |
+| `study.ref.participantInvalid` | Use P and three digits, for example P001. | Tumia P na tarakimu tatu, kwa mfano P001. | false |  |
+| `study.ref.participantUnknown` | {code} is not enrolled. Check the code. | {code} hajasajiliwa. Kagua nambari. | false |  |
+| `study.ref.readingNo` | Reading | Usomaji | false |  |
+| `study.ref.reading` | Reading {n} | Usomaji {n} | false |  |
+| `study.ref.sites` | Measurements in centimetres (0.1 cm) | Vipimo kwa sentimita (sm 0.1) | false |  |
+| `study.ref.howTo` | How to measure {site} | Jinsi ya kupima {site} | false |  |
+| `study.ref.precision` | Use at most one decimal, for example 86.5 | Tumia desimali moja tu, kwa mfano 86.5 | false |  |
+| `study.ref.noneEntered` | Enter at least one measurement. | Weka angalau kipimo kimoja. | false |  |
+| `study.ref.submit` | Save and lock reading | Hifadhi na funga usomaji | false |  |
+| `study.ref.lockedNote` | Saved readings are locked. Only the administrator can correct them. | Usomaji uliohifadhiwa unafungwa. Ni msimamizi tu anayeweza kuurekebisha. | false |  |
+| `study.ref.confirmTitle` | Please check before saving | Tafadhali kagua kabla ya kuhifadhi | false |  |
+| `study.ref.implausible` | You entered {value} for {site}. Is that correct? | Uliweka {value} kwa {site}. Je, ni sahihi? | false |  |
+| `study.ref.empty` | {count, plural, one {# measurement is empty.} other {# measurements are empty.}} | {count, plural, one {Kipimo # kiko wazi.} other {Vipimo # viko wazi.}} | false |  |
+| `study.ref.goBack` | Go back | Rudi | false |  |
+| `study.ref.confirmSubmit` | Yes, save | Ndiyo, hifadhi | false |  |
+| `study.ref.saved` | Saved {participant}, reading {reading}, measurer {measurer} | Imehifadhiwa {participant}, usomaji {reading}, mpimaji {measurer} | false |  |
+| `study.ref.queued` | Saved on this device. It will send by itself when you are online. | Imehifadhiwa kwenye kifaa hiki. Itatumwa yenyewe ukiwa mtandaoni. | false |  |
+| `study.ref.outOfOrder` | Reading 2 was entered before reading 1. This is recorded. | Usomaji 2 uliwekwa kabla ya usomaji 1. Hili linarekodiwa. | false |  |
+| `study.ref.next` | Enter next reading | Weka usomaji unaofuata | false |  |
+| `study.ref.pending` | {count, plural, one {# reading waiting to send.} other {# readings waiting to send.}} | {count, plural, one {Usomaji # unasubiri kutumwa.} other {Usomaji # unasubiri kutumwa.}} | false |  |
+| `study.ref.sendNow` | Send now | Tuma sasa | false |  |
+| `study.ref.flushed` | Sent {sent} queued readings; {locked} were already locked. | Usomaji {sent} uliosubiri umetumwa; {locked} ulikuwa tayari umefungwa. | false |  |
+| `study.instr.stature` | Barefoot, heels together against the wall, head level. Lower the headboard to the top of the head; read at eye level. | Bila viatu, visigino pamoja ukutani, kichwa sawa. Shusha kibao hadi juu ya kichwa; soma ukiwa usawa wa macho. | false |  |
+| `study.instr.shoulder` | Across the back from the tip of one shoulder bone (acromion) to the other, following the curve. | Mgongoni kutoka ncha ya mfupa wa bega mmoja (akromioni) hadi mwingine, ukifuata mkunjo. | false |  |
+| `study.instr.chest` | Tape level around the fullest part of the chest (bust), under the arms, at normal breathing out. | Tepu sawa kuzunguka sehemu kubwa zaidi ya kifua, chini ya mikono, baada ya kupumua kawaida. | false |  |
+| `study.instr.waist` | Tape level around the natural waist (narrowest part between ribs and hip bone), not pulled tight. | Tepu sawa kuzunguka kiuno cha asili (sehemu nyembamba kati ya mbavu na mfupa wa nyonga), isibane. | false |  |
+| `study.instr.hip` | Tape level around the widest part of the buttocks, feet together. | Tepu sawa kuzunguka sehemu pana zaidi ya makalio, miguu pamoja. | false |  |
+| `study.instr.sleeve` | From the shoulder tip over the slightly bent elbow to the wrist bone. | Kutoka ncha ya bega kupitia kiwiko kilichopinda kidogo hadi mfupa wa kifundo. | false |  |
+| `study.instr.outleg` | At the side, from the natural waist straight down to the floor, barefoot. | Pembeni, kutoka kiuno cha asili moja kwa moja hadi sakafuni, bila viatu. | false |  |
+| `study.instr.inleg` | From the crotch straight down the inside of the leg to the floor, barefoot. | Kutoka kwenye msamba moja kwa moja ndani ya mguu hadi sakafuni, bila viatu. | false |  |
+| `study.instr.neck` | Around the neck just below the Adam's apple, one finger under the tape. | Kuzunguka shingo chini kidogo ya kongomeo, kidole kimoja chini ya tepu. | false |  |
+| `study.vault.title` | Study image vault | Hifadhi ya picha za utafiti | false |  |
+| `study.vault.disabled` | Disabled pending ethics approval. | Imezimwa hadi idhini ya maadili ipatikane. | false |  |
+| `study.vault.disabledHint` | Saving study photos needs written approval from the owner and the MKU ethics committee. Until then no photo can be kept. | Kuhifadhi picha za utafiti kunahitaji idhini ya maandishi ya mmiliki na kamati ya maadili ya MKU. Hadi hapo hakuna picha inayoweza kuhifadhiwa. | false |  |
+| `study.vault.explain` | Photos are encrypted on this phone and downloaded as one file for transfer by cable. Nothing is uploaded. | Picha zinasimbwa kwenye simu hii na kupakuliwa kama faili moja kwa kuhamishwa kwa kebo. Hakuna kinachopakiwa mtandaoni. | false |  |
+| `study.vault.consent` | Paper consent includes keeping photos | Idhini ya karatasi inajumuisha kuhifadhi picha | false |  |
+| `study.vault.passphrase` | Passphrase for this session | Kaulisiri ya kipindi hiki | false |  |
+| `study.vault.passphraseHint` | At least 12 characters. It is never stored. | Angalau herufi 12. Haihifadhiwi kamwe. | false |  |
+| `study.vault.passphraseShort` | Use at least 12 characters. | Tumia angalau herufi 12. | false |  |
+| `study.vault.save` | Save encrypted photos | Hifadhi picha zilizosimbwa | false |  |
+| `study.cap.title` | Study capture | Upigaji picha wa utafiti | false |  |
+| `study.cap.intro` | Researcher-run capture for the validation study. The participant does not see this screen. | Upigaji picha unaoendeshwa na mtafiti kwa utafiti wa uthibitishaji. Mshiriki haoni skrini hii. | false |  |
+| `study.cap.participant` | Participant code | Nambari ya mshiriki | false |  |
+| `study.cap.participantUnknown` | {code} is not enrolled. Enrol the participant first. | {code} hajasajiliwa. Msajili mshiriki kwanza. | false |  |
+| `study.cap.set` | Set number | Nambari ya seti | false |  |
+| `study.cap.mode` | Capture mode | Hali ya upigaji | false |  |
+| `study.cap.modeSelf` | Self (participant alone) | Peke yake (mshiriki pekee) | false |  |
+| `study.cap.modeAssisted` | Assisted (researcher presses) | Kwa msaada (mtafiti anabonyeza) | false |  |
+| `study.cap.modeHint` | Sets 1 and 3 are self-capture and set 2 is assisted by default (Section 3.6.2). | Seti 1 na 3 ni za kujipiga na seti 2 ni ya msaada kwa kawaida (Sehemu 3.6.2). | false |  |
+| `study.cap.lighting` | Lighting | Mwanga | false |  |
+| `study.cap.light.window` | Window | Dirisha | false |  |
+| `study.cap.light.lamp` | Lamp | Taa | false |  |
+| `study.cap.light.outdoor` | Outdoor | Nje | false |  |
+| `study.cap.distance` | Distance wall to phone | Umbali kutoka ukuta hadi simu | false |  |
+| `study.cap.distanceHint` | Metres, one decimal, 1.5 to 3.5 | Mita, desimali moja, 1.5 hadi 3.5 | false |  |
+| `study.cap.distanceErr` | Enter a distance from 1.5 to 3.5 m with at most one decimal. | Weka umbali kuanzia mita 1.5 hadi 3.5 wenye desimali moja tu. | false |  |
+| `study.cap.fit` | Clothing fit (researcher judgement) | Ubana wa nguo (maoni ya mtafiti) | false |  |
+| `study.cap.stature` | Stature from the tape | Urefu kutoka kwa utepe | false |  |
+| `study.cap.phone` | Phone model | Aina ya simu | false |  |
+| `study.cap.phoneHint` | Filled in from the browser where possible; on iPhone pick the model. | Imejazwa kutoka kivinjari inapowezekana; kwa iPhone chagua aina. | false |  |
+| `study.cap.lux` | Lux reading | Kipimo cha lux | false |  |
+| `study.cap.luxHint` | From a phone light-meter app, if you have one. | Kutoka programu ya kupima mwanga, kama unayo. | false |  |
+| `study.cap.paper` | Paper consent confirmed for {code} | Idhini ya karatasi imethibitishwa kwa {code} | false |  |
+| `study.cap.start` | Start capture | Anza upigaji | false |  |
+| `study.cap.nextSet` | Start set {set} for {code} | Anza seti {set} kwa {code} | false |  |
+| `study.cap.allSets` | All three sets are captured for {code}. | Seti zote tatu zimepigwa kwa {code}. | false |  |
+| `study.cap.savedStudy` | Study set {set} for {code} saved. | Seti ya utafiti {set} kwa {code} imehifadhiwa. | false |  |

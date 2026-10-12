@@ -57,3 +57,46 @@ Recorded 2026-10-12. The owner answered **"use the defaults"** for all ten quest
 - **Marker size for the live check** is converted to the resolution used for scale (the full-res still on Android, the stream on iOS) before the 80 px rule.
 - **Test shim:** Chromium's fake camera reports no facing mode, so `tests/e2e/real.spec.ts` patches `getSettings()` to report `'environment'`, as a phone's rear camera does. The app's rear-camera check is unchanged.
 - **Not verifiable here:** pose detection on a real person, lens switching, ImageCapture stills, iOS orientation permission and timings on the four reference phones. These need the device tests in `docs/device-test-log.md`.
+
+## Implementation choices made in Phase 5 (tailor dashboard)
+
+- **Login applies the account's preferred language** (`user.locale`) to the UI. Wanjiru's seed locale is `sw`, so after signing in her dashboard is in Kiswahili; the EN | SW toggle still switches instantly.
+- **Mock login of a pending account** returns 200 with `status: 'pending'` (as in Phase 1). The UI routes to `/register/pending` on either that or a `403 account_pending`.
+- **Sign-out redirect:** an expired session (timer or 401) sends the tailor to `/login?next=<where they were>` with "Your session ended". A deliberate sign-out goes to `/login` without `next`.
+- **13.5 "Preview sheet"** without an order is implemented as **"Print measurements"** (print view of the measurement table). Specification sheets belong to orders (13.9), and the server only renders them for an order.
+- **13.4 "Compare profiles"** (Could) is not built.
+- **13.2 infinite scroll** uses an IntersectionObserver on the "Load more" button, which stays as the fallback.
+- **Ease in inches:** entered to the nearest ⅛ in (three decimals allowed); validated as 0–300 mm rather than "one decimal", because inches do not map onto 0.1 cm steps.
+- **Sheet files** (`png_url`, `pdf_url`) are fetched with the auth header and shown via an object URL, because an `<img>` cannot send `Authorization`. Works the same with a cookie transport.
+- **Share via WhatsApp:** `navigator.canShare({ files })` → `navigator.share({ files, text })` → logs `whatsapp_share`; otherwise the PNG is downloaded, `https://wa.me/?text=…` opens in a new tab, the "Attach the downloaded picture in WhatsApp" hint shows, and `wa_link` is logged. Download PDF logs `download`; Print opens the PDF and logs `print`.
+- **New-order picker (FAB):** `/t/orders/new` without `profileId` shows client search → profile list (`?clientId=`), then the form (`?profileId=`). "Change profile" returns to the profile list for the same client.
+- **Leaving a dirty new order** (in-app navigation) asks "Leave without saving?". Closing the tab is not intercepted (no `beforeunload` prompt, to avoid annoying shared-phone users).
+- **Settings → Privacy notice** links to `/privacy` (client route, Section 9.13).
+- **Version line:** Settings shows `APP_VERSION` (from `package.json`) and `RULES_VERSION` from `$lib/measure` (via `src/lib/version.ts`).
+- **Header section title** is a `<p>`; each page owns the single `<h1>`.
+
+## Implementation choices made in Phase 6 (admin and study)
+
+- **Accounts tabs:** Pending · Active · Disabled. Rejected accounts appear under Disabled with "rejected: <reason>", and can be re-enabled. The list is loaded once (`GET /admin/accounts`) and filtered on the client; the `status` query still exists in the contract. Tabs are a real ARIA tablist (arrow keys move between tabs).
+- **Bulk approve** calls `POST /admin/accounts/{id}/approve` per account (no bulk endpoint in the contract). Failures are reflected in the "N accounts approved" count.
+- **An admin cannot disable their own account** (button hidden; the mock also returns 403).
+- **Measurer accounts** can be created from Accounts (dialog) and from Study › Measurers. The measurer code is one letter A–Z; a taken code shows a field error from the 422 response.
+- **Admin audit** uses Previous/Next paging (25 per page), as a "paginated table" (Section 14). The tailor's own audit uses "Load more".
+- **Study mode switch** asks for confirmation with an explanation. After saving, the public-settings cache is refreshed so the admin's Study nav item, and the study route guards, follow at once.
+- **Study › Capture** links to `/study/capture` (15.1, owned by the capture app). Participant cards link to `/study/capture?participant=P00n` ("Start set n").
+- **Tape entry (15.2):**
+  - Blank sites are allowed; the confirmation dialog lists them ("7 measurements are empty") alongside implausible values ("You entered 12.0 cm for waist. Is that correct?").
+  - Values must have at most one decimal.
+  - The page makes no request that could return system values (asserted in e2e).
+  - Readings go to a separate Dexie DB (`vt-study`, table `readings`, image-guard hooks) when the server cannot be reached (network error or 5xx). They are sent on `online`, every 30 s and via "Send now". A queued reading that turns out to be locked or invalid is dropped and reported.
+  - A browser `beforeunload` prompt guards unsaved typed readings.
+  - The Appendix C instructions behind (i) are drafts: `study.instr.*` in `src/lib/i18n/messages/study.*.ts`. **[CONFIRM against the study protocol.]**
+- **Image vault (15.6):** `src/lib/study/imageVault.ts`, AES-GCM-256 with a key from PBKDF2-SHA-256 at 310,000 iterations (a lower count is refused).
+  - Random 16-byte salt and 12-byte IV. File format `VTIMG1 | salt | iv | ciphertext`. File name `P001-set2.vtimg`.
+  - `saveVault` throws `VaultDisabledError` unless `VITE_FEATURE_STUDY_IMAGES=true`.
+  - UI: `src/lib/ui/StudyImageVault.svelte`, shown on Study › Exports in its disabled state. The capture flow (15.1) should pass the frames and meta to it after the burst, then release the frames.
+  - `decryptVault` exists for the study-laptop tooling and tests.
+
+- **Study capture (15.1)** is the client capture flow started from `/study/capture` (admin only): participant code, set number (mode defaults: sets 1 and 3 self, set 2 assisted), lighting, distance (1.5–3.5 m), observed fit, phone model (UA-CH, or a list on iPhone), optional lux, tape stature, and "Paper consent confirmed" instead of the three-box consent (`study-paper-1.0`). The saved profile carries the `study` block (C6) and the participant's linked client code; Saved offers "Start set N+1".
+- **Image vault in study capture:** with `VITE_FEATURE_STUDY_IMAGES=false` (decision 1) the capture flow keeps no frames for the vault, and no photo-retention tick box is shown. Wiring frames into `StudyImageVault` is part of the approval work.
+- **Mock persistence:** in the browser the MSW mock saves its database to `sessionStorage` (`vt.mock.db`) so a full reload keeps tokens and data; unit tests keep it in memory.

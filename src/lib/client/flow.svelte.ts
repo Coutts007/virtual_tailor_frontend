@@ -43,7 +43,9 @@ export const capture = $state({
 	processing_ms: 0,
 	/** Shutter time of the most recent burst (ms epoch). */
 	burst_done_at: 0,
-	model_variant: 'lite' as CaptureSession['model_variant']
+	model_variant: 'lite' as CaptureSession['model_variant'],
+	/** Validation study (15.1): covariates for the session's study block (C6). */
+	study: null as CaptureSession['study'] | null
 });
 
 /** Dev-only counter of live capture buffers, read by the memory privacy test. */
@@ -195,7 +197,7 @@ export function buildProfile(opts: {
 		processing_ms: capture.processing_ms,
 		retake_count: capture.retake_count,
 		config_hash: opts.config_hash,
-		...(opts.study ? { study: opts.study } : {})
+		...((opts.study ?? capture.study) ? { study: opts.study ?? capture.study! } : {})
 	};
 	const empty = {
 		corners: [] as [number, number][],
