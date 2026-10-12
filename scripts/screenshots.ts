@@ -22,7 +22,7 @@ for (const [w, h] of [
 		await ctx.addInitScript((l) => localStorage.setItem('vt.lang', l), lang);
 		const page = await ctx.newPage();
 		for (const route of routes.length ? routes : ['/']) {
-			await page.goto(`http://localhost:5173${route}`);
+			await page.goto(`http://localhost:${process.env.VT_PORT ?? 5173}${route}`);
 			await page.locator('html[data-vt-ready="true"]').waitFor({ state: 'attached' });
 			const name = route === '/' ? 'welcome' : route.replace(/^\//, '').replace(/[/?=&]/g, '_');
 			await page.screenshot({ path: `${out}/${name}-${lang}-${w}x${h}.png`, fullPage: true });

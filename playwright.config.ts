@@ -4,6 +4,9 @@ import { defineConfig, devices } from '@playwright/test';
  * E2E runs against the Vite dev server in mock mode (MSW). Later phases add the
  * fake-camera Chromium project and a WebKit project (Section 21.1).
  */
+/** Port is configurable so parallel worktrees and a running dev server do not collide. */
+const PORT = Number(process.env.VT_PORT ?? 5173);
+
 export default defineConfig({
 	testDir: 'tests/e2e',
 	fullyParallel: true,
@@ -11,15 +14,15 @@ export default defineConfig({
 	retries: process.env.CI ? 1 : 0,
 	reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
 	use: {
-		baseURL: 'http://localhost:5173',
+		baseURL: `http://localhost:${PORT}`,
 		trace: 'retain-on-failure',
 		locale: 'en-KE',
 		timezoneId: 'Africa/Nairobi'
 	},
 	webServer: {
-		command: 'npm run dev -- --strictPort',
-		url: 'http://localhost:5173',
-		reuseExistingServer: !process.env.CI,
+		command: `npm run dev -- --port ${PORT} --strictPort`,
+		url: `http://localhost:${PORT}`,
+		reuseExistingServer: !process.env.CI && !process.env.VT_PORT,
 		env: { VITE_API_MODE: 'mock' }
 	},
 	projects: [

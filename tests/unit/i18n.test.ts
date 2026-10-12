@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { en } from '../../src/lib/i18n/en';
-import { sw } from '../../src/lib/i18n/sw';
+import { en, MODULES_EN } from '../../src/lib/i18n/en';
+import { sw, MODULES_SW } from '../../src/lib/i18n/sw';
 import { formatMessage } from '../../src/lib/i18n/format';
 
 describe('i18n key parity (NFR-06)', () => {
@@ -8,6 +8,22 @@ describe('i18n key parity (NFR-06)', () => {
 		const enKeys = Object.keys(en).sort();
 		const swKeys = Object.keys(sw).sort();
 		expect(swKeys).toEqual(enKeys);
+	});
+
+	it('no key is defined in two message modules', () => {
+		for (const mods of [MODULES_EN, MODULES_SW]) {
+			const seen = new Map<string, string>();
+			for (const [mod, dict] of Object.entries(mods))
+				for (const k of Object.keys(dict)) {
+					expect(seen.get(k), `${k} in ${mod} and ${seen.get(k)}`).toBeUndefined();
+					seen.set(k, mod);
+				}
+		}
+	});
+
+	it('each module has the same keys in both languages', () => {
+		for (const mod of Object.keys(MODULES_EN) as (keyof typeof MODULES_EN)[])
+			expect(Object.keys(MODULES_SW[mod]).sort(), mod).toEqual(Object.keys(MODULES_EN[mod]).sort());
 	});
 
 	it('no empty translations', () => {
