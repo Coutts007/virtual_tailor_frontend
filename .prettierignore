@@ -1,0 +1,13 @@
+node_modules
+build
+.svelte-kit
+package-lock.json
+mocks/public/mockServiceWorker.js
+static/models
+static/wasm
+static/opencv
+playwright-report
+test-results
+coverage
+docs/*.md
+*.md

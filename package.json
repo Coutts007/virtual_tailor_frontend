@@ -1,0 +1,57 @@
+{
+	"name": "vt-frontend",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"description": "Virtual Tailor (VT) client-side tier: SvelteKit + TypeScript PWA",
+	"license": "UNLICENSED",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
+		"lint": "prettier --check . && eslint . --max-warnings 0",
+		"format": "prettier --write .",
+		"test": "npm run test:unit",
+		"test:unit": "vitest run",
+		"test:e2e": "playwright test",
+		"licenses": "node scripts/licenses.mjs",
+		"msw:init": "msw init mocks/public --no-save",
+		"i18n:review": "vite-node -c scripts/vite-node.config.mjs scripts/i18n-review.ts",
+		"ci": "npm run lint && npm run check && npm run test:unit && npm run licenses && npm run build"
+	},
+	"dependencies": {
+		"dexie": "^4.4.6"
+	},
+	"devDependencies": {
+		"@axe-core/playwright": "^4.13.0",
+		"@eslint/js": "^9.39.5",
+		"@playwright/test": "^1.64.0",
+		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/vite-plugin-svelte": "^5.1.1",
+		"eslint": "^9.39.5",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.23.1",
+		"fake-indexeddb": "^6.2.5",
+		"globals": "^16.0.0",
+		"msw": "^2.15.0",
+		"prettier": "^3.6.2",
+		"prettier-plugin-svelte": "^3.4.0",
+		"svelte": "^5.57.2",
+		"svelte-check": "^4.7.6",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.71.1",
+		"vite": "^6.4.4",
+		"vitest": "^3.2.7"
+	},
+	"msw": {
+		"workerDirectory": [
+			"static"
+		]
+	}
+}

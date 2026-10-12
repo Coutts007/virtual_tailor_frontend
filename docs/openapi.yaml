@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: Virtual Tailor API
+  version: 0.0.1
+  description: Draft. The full specification is delivered in Phase 1 (Section 20).
+servers:
+  - url: /api/v1
+paths:
+  /settings/public:
+    get:
+      summary: Public feature switches
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicSettings'
+components:
+  schemas:
+    PublicSettings:
+      type: object
+      required: [study_mode, consent_version, min_app_version]
+      properties:
+        study_mode: { type: boolean }
+        consent_version: { type: string }
+        min_app_version: { type: string }
