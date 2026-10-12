@@ -7,6 +7,7 @@
 	import { network, watchNetwork } from '$lib/device/network.svelte';
 	import { startWorkers, swState, applyUpdate } from '$lib/sw/register.svelte';
 	import Banner from '$lib/ui/Banner.svelte';
+	import Toaster from '$lib/ui/Toaster.svelte';
 
 	let { children }: { children: Snippet } = $props();
 
@@ -31,6 +32,8 @@
 {/if}
 
 {@render children()}
+
+<Toaster />
 
 {#if swState.updateReady}
 	<div class="update-toast" role="status">

@@ -4,7 +4,7 @@ The client-side tier of **Virtual Tailor (VT)**, a final-year Computer Science p
 
 The full build specification is `../VT_frontend_agent_prompt.md`. Owner decisions are in `docs/decisions.md`.
 
-> **Status:** Phase 0 (setup) complete. See "Phases" below.
+> **Status:** Phase 1 (design system and API contract) complete. See "Phases" below.
 
 ## Requirements
 
@@ -20,6 +20,26 @@ npm run dev              # http://localhost:5173
 ```
 
 In development with `VITE_API_MODE=mock`, a Mock Service Worker (MSW) answers every `/api/v1` request from deterministic seed data (`mocks/`).
+
+### Developer pages (dev builds only)
+
+- **http://localhost:5173/dev/ui**: component gallery (every component in Section 8.4, EN/SW).
+- **http://localhost:5173/dev/mock**: mock backend controls: latency on/off, force an error per endpoint, reset data to the seed.
+
+### Seed accounts (mock)
+
+All use the password `vt-demo-2026`.
+
+| Email | Role | Notes |
+|---|---|---|
+| `admin@vt.test` | admin | Researcher / operator |
+| `wanjiru@vt.test` | tailor | Mama Wanjiru Tailors, Gikomba: 8 clients, Kiswahili, ease presets |
+| `otieno@vt.test` | tailor | Otieno Bespoke, CBD: 3 clients, inches |
+| `pending@vt.test` | tailor | Waiting for approval |
+| `disabled@vt.test` | tailor | Disabled account |
+| `measurer-a@vt.test`, `measurer-b@vt.test` | measurer | Study measurers A and B |
+
+Client codes to try in the client app: `AB1234` (Amina, height pre-filled), `QT1200` (no measurements yet). Any other valid-looking code returns "code not found".
 
 ## Environment variables
 
@@ -41,7 +61,7 @@ Set `VITE_API_MODE=http` (and `VITE_API_BASE_URL` if the API is on another origi
 | `npm run build` / `npm run preview` | Static SPA build into `build/` (adapter-static, `index.html` fallback) |
 | `npm run check` | `svelte-check` type checking (fails on warnings) |
 | `npm run lint` / `npm run format` | Prettier + ESLint / auto-format |
-| `npm run test:unit` | Vitest (unit, fake IndexedDB, MSW in Node) |
+| `npm run test:unit` | Vitest: unit tests plus API contract tests against the mock (fake IndexedDB, MSW in Node) |
 | `npm run test:e2e` | Playwright (phone 360 × 800 and desktop 1280 × 800) with axe-core |
 | `npm run licenses` | Regenerates `docs/LICENSES.md` and fails on prohibited licences |
 | `npm run i18n:review` | Regenerates `docs/i18n-review.md` from the Kiswahili dictionary |
@@ -52,15 +72,17 @@ Set `VITE_API_MODE=http` (and `VITE_API_BASE_URL` if the API is on another origi
 ```
 src/
   lib/
-    api/       ApiClient interface, HttpApiClient, types.ts (wire types), errors.ts
+    api/       ApiClient interface (every endpoint), HttpApiClient, types.ts (wire types), errors.ts
+    auth/      AuthTransport (bearer + sessionStorage, or cookie), session store, role guards
+    domain/    units (mm/cm/in), validators, sites and garment map, WhatsApp share text
     db/        Dexie schema v1, settings, image guard (no image ever stored)
     i18n/      en.ts, sw.ts, ICU-style formatter, reactive t()
     styles/    tokens.css (design tokens, light + dark), base.css
-    ui/        component library (grows in Phase 1)
+    ui/        component library (Section 8.4); see /dev/ui
     capture/ vision/ measure/ device/ study/ auth/   (later phases)
   routes/      SvelteKit routes (SPA mode)
   service-worker.ts   precaches shell/models; never caches /api/
-mocks/         MSW handlers, seed data, dev-only worker script
+mocks/         MSW handlers for every endpoint, deterministic seed, sheet renderer, dev controls
 tests/unit     Vitest
 tests/e2e      Playwright
 docs/          decisions, design notes, API contract, traceability, licences, i18n review, device log
@@ -86,8 +108,8 @@ Phase 4. The measurement rules live in `src/lib/measure/rules.ts`; this section 
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | Setup: scaffold, tokens, i18n skeleton, Dexie, MSW, CI, docs | ✅ Done |
-| 1 | Design system (`/dev/ui`) and API contract + full mock | Next |
-| 2 | Client flow with fake vision | |
+| 1 | Design system (`/dev/ui`) and API contract + full mock | ✅ Done |
+| 2 | Client flow with fake vision | Next |
 | 3 | Real capture pipeline | |
 | 4 | Measurement module | |
 | 5 | Tailor dashboard | |

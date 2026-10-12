@@ -15,7 +15,10 @@ for (const [w, h] of [
 	[1280, 800]
 ] as const) {
 	for (const lang of ['en', 'sw']) {
-		const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+		const ctx = await browser.newContext({
+			viewport: { width: w, height: h },
+			deviceScaleFactor: 1
+		});
 		await ctx.addInitScript((l) => localStorage.setItem('vt.lang', l), lang);
 		const page = await ctx.newPage();
 		for (const route of routes.length ? routes : ['/']) {

@@ -29,10 +29,14 @@ export default ts.config(
 		// Section 19: no console logging of personal data in production code.
 		files: ['src/**/*.{ts,svelte}'],
 		rules: {
-			'no-console': ['error', { allow: ['warn', 'error'] }],
+			'no-console': ['error', { allow: ['warn', 'error'] }]
+		}
+	},
+	{
+		rules: {
 			'@typescript-eslint/no-unused-vars': [
 				'error',
-				{ argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+				{ argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true }
 			]
 		}
 	},

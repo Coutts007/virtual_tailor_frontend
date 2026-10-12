@@ -25,3 +25,13 @@ Recorded 2026-10-12. The owner answered **"use the defaults"** for all ten quest
 - **Mock backend seam:** in both modes the UI uses one `HttpApiClient`. In mock mode, MSW intercepts `fetch` at the network layer, so `VITE_API_MODE=http` is the only switch needed. There is no separate `MockApiClient` class; the MSW handlers *are* the mock.
 - **Service-worker scope:** only one service worker can own `/`. In development with `VITE_API_MODE=mock`, MSW's worker is registered and the app worker is not. In production, the app worker is registered and MSW is not bundled (its script is served only by a dev-server middleware).
 - **Language preference** is mirrored to `localStorage` (`vt.lang`) so the first paint is in the right language before IndexedDB opens. It is a UI preference, not personal data, and is allowed by Section 19 (which forbids tokens in `localStorage`).
+
+## Implementation choices made in Phase 1
+
+- **Contract additions beyond Section 20.2** (all documented in `api-contract.md` / `openapi.yaml`): `GET /orders` also returns `counts` per status for the queue chips; `GET /me` carries `unit_pref`, `include_name_default` and `ease_presets`; `GET /clients/{id}` embeds the client's profiles and orders; participants carry completeness (`sets_captured`, `readings` per site); reference-reading results carry `out_of_order`; account status adds `rejected` (with `reject_reason`).
+- **Error codes not named in the prompt:** deleting a non-new order returns `409 validation_failed` (a dedicated `order_in_progress` code may be cleaner; backend to decide). Unconfirmed flagged rows return `422` with `errors[].code = flag_unconfirmed`. Profile bodies over 200 KB return `413`.
+- **Conflicts:** a device profile that reaches the server with a version not above the server's latest becomes a conflict pair keyed by the server copy's `profile_id`.
+- **Mock sheet rendering:** the mock draws the Figure 5.6 layout as SVG, rasterises it to PNG in the browser and writes a text-only PDF. The real server renders both.
+- **Audit actions:** reject / disable / enable / measurer creation reuse `approve` or `settings_change` because the `AuditAction` enum has nothing more specific; conflict resolution logs `settings_change`. Backend may extend the enum.
+- **Dev-only pages:** `/dev/ui` (component gallery) and `/dev/mock` (latency and per-endpoint failure toggles, reset to seed) return 404 in production builds. Their demo content is sample data and is not translated; component strings are.
+- **Seed extras:** a `disabled@vt.test` tailor (to demo the disabled-account message) and study participants linked to admin-owned client codes `SP1001`–`SP1005`.

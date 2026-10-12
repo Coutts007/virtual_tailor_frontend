@@ -21,7 +21,7 @@ describe('i18n key parity (NFR-06)', () => {
 				.sort()
 				.join(',');
 		for (const k of Object.keys(en) as (keyof typeof en)[]) {
-			expect(names(sw[k]), k).toBe(names(en[k]));
+			expect(names(sw[k]), k).toBe(names(en[k] as string));
 		}
 	});
 });

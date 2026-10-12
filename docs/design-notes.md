@@ -60,3 +60,13 @@ The capture border colours were brightened from the usual UI greens and reds so 
 ## UX principle notes
 
 - Language toggle (`EN | SW`) is a two-button group with `aria-pressed` and full language names as accessible labels; each button carries its own `lang` attribute so screen readers pronounce it correctly.
+
+## Component notes (Phase 1)
+
+- **Silhouette (9.10):** a neutral drawn outline, never the client's photo or mask. Left labels Neck, Chest/Bust, Waist, Hip; right labels Shoulder, Sleeve, Outside leg, Inside leg. Each label is a button (≥ 48 px tall) with name, value, flag badge and ISO 8559-1 term. Below 400 px the ISO term is hidden inside the diagram (it stays in the list version and the detail sheet) so the labels fit at 360 px. A `numbers` mode draws numbered dots for the tailor's table view (13.5).
+- **Arms on the review silhouette** are drawn about 12° from the body rather than 30°, so the arm does not cross the label columns. The 30° pose applies to the capture target outline (9.7), which is a separate drawing.
+- **CodeInput:** one real `<input>` drawn as six boxes. Paste, autofill, screen readers and form state survive language switches. Mask: two letters then four digits; `inputmode` switches from `text` to `numeric` after the letters.
+- **Dialog / BottomSheet:** native `<dialog>` with `showModal()`, so focus trapping and the inert background come from the browser; Escape closes; focus returns to the opener.
+- **DataTable:** one markup, a table at ≥ 768 px and stacked cards below via CSS, so screen readers always get a real table.
+- **FlagBadge:** icon + word + colour; the "Check" badge uses dark amber text (`check-ink`) on a light amber fill with an amber icon, per 8.2.
+- **LevelBubble:** level per C1 (beta 88°–92°, |gamma| ≤ 2°); 10° of tilt moves the bubble to the edge. "Cannot check" state for missing sensors.
