@@ -1,5 +1,6 @@
 import type { ApiClient } from './client';
 import { HttpApiClient } from './http';
+import { mockReady } from './mockReady';
 import { BearerSessionTransport, type AuthTransport } from '$lib/auth/transport';
 import { endSession, initSession } from '$lib/auth/session.svelte';
 
@@ -28,7 +29,14 @@ export function api(): ApiClient {
 	client ??= new HttpApiClient({
 		baseUrl: API_BASE_URL,
 		authHeaders: () => auth().headers(),
-		onUnauthorized: () => endSession('expired')
+		fetchImpl: async (input, init) => {
+			await mockReady();
+			return fetch(input, init);
+		},
+		// A wrong current password on /me/password is also a 401; that is not a session end.
+		onUnauthorized: (p) => {
+			if (p.code !== 'invalid_credentials') endSession('expired');
+		}
 	});
 	return client;
 }
