@@ -1,5 +1,5 @@
-import { en, type MessageKey } from './en';
-import { sw } from './sw';
+import type { MessageKey } from './en';
+import { coreEn, coreSw, LOADERS, type LazyModule } from './core';
 import { formatMessage, type Params } from './format';
 
 export type Lang = 'en' | 'sw';
@@ -7,7 +7,29 @@ export const LANGS: Lang[] = ['en', 'sw'];
 export const INTL_LOCALE: Record<Lang, string> = { en: 'en-KE', sw: 'sw-KE' };
 export const TIME_ZONE = 'Africa/Nairobi';
 
-const dictionaries: Record<Lang, Record<MessageKey, string>> = { en, sw };
+const dictionaries: Record<Lang, Record<string, string>> = { en: { ...coreEn }, sw: { ...coreSw } };
+const loaded = new Set<LazyModule>();
+
+/** Bumped when a lazy module arrives so t() re-renders reactively. */
+const i18n = $state({ version: 0 });
+
+/**
+ * Loads dashboard, admin or study strings (route-group layouts call this in
+ * their load function, before rendering).
+ */
+export async function loadMessages(mods: LazyModule[]): Promise<void> {
+	await Promise.all(
+		mods
+			.filter((m) => !loaded.has(m))
+			.map(async (m) => {
+				const [e, s] = await LOADERS[m]();
+				Object.assign(dictionaries.en, e);
+				Object.assign(dictionaries.sw, s);
+				loaded.add(m);
+			})
+	);
+	i18n.version++;
+}
 const STORAGE_KEY = 'vt.lang';
 
 /** Reactive language state. Persisted to Dexie settings as well (see db/settings.ts). */
@@ -40,7 +62,8 @@ export function t(key: MessageKey, params?: Params): string {
 }
 
 export function translate(lang: Lang, key: MessageKey, params?: Params): string {
-	const template = dictionaries[lang][key] ?? en[key] ?? key;
+	void i18n.version;
+	const template = dictionaries[lang][key] ?? dictionaries.en[key] ?? key;
 	return formatMessage(template, params, INTL_LOCALE[lang]);
 }
 

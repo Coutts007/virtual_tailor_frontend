@@ -36,10 +36,16 @@ export async function startWorkers(): Promise<void> {
 		swState.updateReady = true;
 	}
 	reg.addEventListener('updatefound', () => watch(reg.installing));
-	navigator.serviceWorker.addEventListener('controllerchange', () => location.reload());
+	// Reload only after the user chose "Refresh" (never on first install, never mid-capture).
+	navigator.serviceWorker.addEventListener('controllerchange', () => {
+		if (refreshRequested) location.reload();
+	});
 }
 
 /** Never call mid-capture (the capture screen suppresses the toast). */
+let refreshRequested = false;
+
 export function applyUpdate(): void {
+	refreshRequested = true;
 	swState.waiting?.postMessage('SKIP_WAITING');
 }

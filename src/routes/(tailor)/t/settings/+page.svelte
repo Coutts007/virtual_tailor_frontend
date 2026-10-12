@@ -319,15 +319,12 @@
 {/if}
 
 <style>
+	/* Columns sized in rem: two side by side on wide screens, one when text is zoomed (WCAG 1.4.4). */
 	.grid {
 		display: grid;
 		gap: var(--vt-s-16);
-	}
-	@media (min-width: 1024px) {
-		.grid {
-			grid-template-columns: 1fr 1fr;
-			align-items: start;
-		}
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+		align-items: start;
 	}
 	.panel {
 		padding: var(--vt-s-16);

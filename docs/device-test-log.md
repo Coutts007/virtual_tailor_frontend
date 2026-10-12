@@ -6,6 +6,7 @@ To be filled in on physical phones (not possible in the build environment). Meas
 |---|---|
 | First load, vision assets (uncompressed) | 29.5 MB: MediaPipe SIMD WASM 13.0 MB, OpenCV.js 10.4 MB, Pose Lite 5.8 MB, loader 0.3 MB |
 | First load, vision assets (gzip) | ≈ 12.3 MB: 3.8 + 3.4 + 5.0 + 0.1 MB |
+| Lighthouse (production build, mobile simulated throttling) | Welcome TTI 2.7–2.9 s, FCP 1.8 s, 163 KB transferred; Login TTI 2.6 s |
 | Real pipeline in desktop Chromium with fake camera | camera opens, models load from cache, marker found live, no pose (no person), bitmaps released, no uploads (`tests/e2e/real.spec.ts`) |
 
 

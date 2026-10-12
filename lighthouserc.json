@@ -1,0 +1,41 @@
+{
+	"ci": {
+		"collect": {
+			"startServerCommand": "node scripts/serve-build.mjs 4181",
+			"url": ["http://localhost:4181/", "http://localhost:4181/login"],
+			"numberOfRuns": 3,
+			"settings": {
+				"formFactor": "mobile",
+				"throttlingMethod": "simulate",
+				"chromeFlags": "--headless=new --no-sandbox",
+				"onlyCategories": ["performance", "accessibility", "best-practices"]
+			}
+		},
+		"assert": {
+			"assertions": {
+				"interactive": [
+					"error",
+					{
+						"maxNumericValue": 3500
+					}
+				],
+				"total-byte-weight": [
+					"warn",
+					{
+						"maxNumericValue": 600000
+					}
+				],
+				"categories:accessibility": [
+					"error",
+					{
+						"minScore": 0.95
+					}
+				]
+			}
+		},
+		"upload": {
+			"target": "filesystem",
+			"outputDir": "lighthouse-report"
+		}
+	}
+}

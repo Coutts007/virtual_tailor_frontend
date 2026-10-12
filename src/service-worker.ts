@@ -20,7 +20,11 @@ const EXCLUDE = [
 /** Vision assets: cached only by the client's "Download now" (UX principle 10), served from there. */
 const MODEL_CACHE = 'vt-models-v1';
 const MODEL_PATH = /^\/(models|wasm|opencv)\//;
-export const PRECACHE = [...build, ...files].filter((p) => !EXCLUDE.some((re) => re.test(p)));
+/** The SPA shell ('/' serves index.html) is not in build/files, so add it (FR-01 offline). */
+export const SHELL = '/';
+export const PRECACHE = [SHELL, ...build, ...files].filter(
+	(p) => !EXCLUDE.some((re) => re.test(p))
+);
 
 export function isApiRequest(url: URL): boolean {
 	return url.pathname.startsWith('/api/');
@@ -72,16 +76,22 @@ sw.addEventListener('fetch', (event) => {
 	event.respondWith(
 		(async () => {
 			const cache = await caches.open(CACHE);
+			// App routes are all the same SPA shell: cache-first (fast repeat loads on 3G);
+			// a new service worker version brings a new shell.
+			if (req.mode === 'navigate') {
+				const shell = await cache.match(SHELL);
+				if (shell) return shell;
+				try {
+					return await fetch(req);
+				} catch {
+					return new Response('Offline', { status: 503 });
+				}
+			}
 			const cached = await cache.match(url.pathname);
 			if (cached) return cached;
 			try {
 				return await fetch(req);
 			} catch {
-				// SPA navigation offline: serve the shell.
-				if (req.mode === 'navigate') {
-					const shell = await cache.match('/index.html');
-					if (shell) return shell;
-				}
 				return new Response('Offline', { status: 503 });
 			}
 		})()

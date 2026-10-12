@@ -33,9 +33,19 @@ function noMockInBuild(): Plugin {
 	};
 }
 
+function previewHeaders(): Record<string, string> {
+	try {
+		return JSON.parse(readFileSync('build/security-headers.json', 'utf8'));
+	} catch {
+		return {};
+	}
+}
+
 export default defineConfig({
 	plugins: [mswDevWorker(), noMockInBuild(), sveltekit()],
 	server: { port: 5173 },
+	// Production preview serves the same security headers the host must send (Section 19).
+	preview: { headers: previewHeaders() },
 	optimizeDeps: { include: ['dexie', 'msw/browser'] },
 	test: {
 		include: ['tests/unit/**/*.test.ts', 'src/**/*.test.ts'],

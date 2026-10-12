@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { formatDateTime, t } from '$lib/i18n/t.svelte';
+	import { formatDateTime, loadMessages, t } from '$lib/i18n/t.svelte';
 	import { changeCode, clearThisPhone, getProfile } from '$lib/db/profiles';
 	import type { LocalProfile } from '$lib/db/dexie';
 	import { validateClientCode } from '$lib/domain/validate';
@@ -35,6 +35,7 @@
 	}
 
 	onMount(() => {
+		if (study) void loadMessages(['study']);
 		ios = isIos();
 		void reload();
 		const timer = setInterval(reload, 2000);

@@ -349,12 +349,30 @@ The front end depends on these. Please add them to the DDL.
 
 ## 7. Deployment headers (for the deployer)
 
+`npm run build` writes **`build/_headers`** (Netlify / Cloudflare Pages format; copy the values for nginx, Caddy or others) and `build/security-headers.json`. Use those files: the CSP contains the SHA-256 of SvelteKit's one inline bootstrap script, which changes with each build.
+
 ```
-Strict-Transport-Security: max-age=63072000; includeSubDomains
-Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' <api-origin>; img-src 'self' blob: data:; media-src 'self' blob:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'
+/*
+  Content-Security-Policy: default-src 'self'; worker-src 'self' blob:; connect-src 'self' <api-origin>; img-src 'self' blob: data:; media-src 'self' blob:; object-src 'none'; script-src 'self' 'wasm-unsafe-eval' 'sha256-<from the build>'; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=()
+
+/workers/marker.worker.js
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'; connect-src 'self'
+
+/service-worker.js
+  Cache-Control: no-cache
+
+/_app/immutable/*
+  Cache-Control: public, max-age=31536000, immutable
 ```
 
-- Serve the SPA fallback (`index.html`) for unknown paths.
-- Serve `service-worker.js` with `Cache-Control: no-cache`.
+- `<api-origin>` is added to `connect-src` automatically when `VITE_API_BASE_URL` is an absolute URL at build time; same-origin `/api/v1` needs nothing.
+- **Marker worker exception (open decision):** the stock OpenCV.js build evaluates generated code at start-up, so only the marker worker's script gets `'unsafe-eval'` (a worker's policy comes from its own response). The pages keep the strict policy. The rule must **replace**, not add to, the `/*` policy for that path; on hosts that merge headers, configure it so the worker response carries only this policy. A custom OpenCV.js built with `-s DYNAMIC_EXECUTION=0` removes the need (see `docs/opencv-build.md`).
+- Serve the SPA fallback (`index.html`) for unknown paths (app routes), and real 404s for missing files with an extension.
+- Compress text, JavaScript and **`.wasm`** responses (gzip or Brotli): the vision assets are 29.5 MB raw but about 12.3 MB compressed.
 - HTTPS only (the camera and service worker need a secure context).
 - COOP/COEP are **not** needed: WebAssembly runs single-threaded SIMD (Section 2.2). Add them only if threads are enabled later.
+- `node scripts/serve-build.mjs [port]` serves `build/` exactly like this, for local checks and the production tests.

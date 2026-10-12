@@ -22,12 +22,17 @@
 		"licenses": "node scripts/licenses.mjs",
 		"msw:init": "msw init mocks/public --no-save",
 		"i18n:review": "vite-node -c scripts/vite-node.config.mjs scripts/i18n-review.ts",
-		"ci": "npm run lint && npm run check && npm run test:unit && npm run test:coverage && npm run licenses && npm run build",
+		"ci": "npm run lint && npm run check && npm run test:unit && npm run test:coverage && npm run licenses && npm run audit && npm run build && npm run budget",
 		"marker": "node scripts/make-marker-sheet.mjs",
 		"test:coverage": "vitest run --coverage tests/unit/measure",
 		"vendor": "node scripts/vendor-assets.mjs",
 		"predev": "node scripts/vendor-assets.mjs || echo \"vision assets missing: run npm run vendor when online\"",
-		"prebuild": "node scripts/vendor-assets.mjs"
+		"prebuild": "node scripts/vendor-assets.mjs",
+		"budget": "node scripts/budget.mjs",
+		"postbuild": "node scripts/security-headers.mjs",
+		"test:prod": "playwright test -c playwright.prod.config.ts",
+		"audit": "node scripts/audit.mjs",
+		"lighthouse": "npx -y @lhci/cli@0.14.0 autorun"
 	},
 	"dependencies": {
 		"@mediapipe/tasks-vision": "^1.1.0",

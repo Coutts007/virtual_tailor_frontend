@@ -1,0 +1,4 @@
+{
+	"_note": "Deployed-dependency advisories accepted after review. Each entry: { package, reason, expires (YYYY-MM-DD) }. Expired entries fail the audit again.",
+	"allow": []
+}

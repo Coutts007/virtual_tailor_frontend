@@ -61,8 +61,14 @@
 </div>
 
 <style>
+	/*
+	 * Table or stacked cards by the space available in em, so 200% text zoom
+	 * switches to cards instead of overflowing (WCAG 1.4.4 / 1.4.10).
+	 */
 	.dt {
 		width: 100%;
+		container-type: inline-size;
+		overflow-x: auto;
 	}
 	table {
 		width: 100%;
@@ -99,7 +105,7 @@
 		color: var(--vt-ink-muted);
 	}
 
-	@media (max-width: 767.98px) {
+	@container (max-width: 47.99em) {
 		thead {
 			position: absolute;
 			width: 1px;

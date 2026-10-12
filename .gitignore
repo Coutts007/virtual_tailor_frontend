@@ -21,3 +21,6 @@ vite.config.*.timestamp-*
 /static/models/*
 !/static/models/.gitkeep
 /static/workers/
+/playwright-report-prod
+/lighthouse-report
+/.lighthouseci
