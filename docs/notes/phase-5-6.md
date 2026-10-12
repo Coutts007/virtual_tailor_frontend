@@ -48,3 +48,48 @@ Branch `phase-5-6-dashboard`. This file lists decisions, deviations, shared-file
 | 17 accessibility | `tailor.spec.ts` "axe: every tailor route (en/sw)", `auth.spec.ts` "axe: login and register (en/sw)" |
 
 Screenshots: `docs/checkpoints/phase-5/` (EN + SW, 360 × 800 and 1280 × 800).
+
+## Decisions and deviations (Phase 6)
+
+- **Accounts tabs:** Pending · Active · Disabled. Rejected accounts appear under Disabled with "rejected: <reason>", and can be re-enabled. The list is loaded once (`GET /admin/accounts`) and filtered on the client; the `status` query still exists in the contract. Tabs are a real ARIA tablist (arrow keys move between tabs).
+- **Bulk approve** calls `POST /admin/accounts/{id}/approve` per account (no bulk endpoint in the contract). Failures are reflected in the "N accounts approved" count.
+- **An admin cannot disable their own account** (button hidden; the mock also returns 403).
+- **Measurer accounts** can be created from Accounts (dialog) and from Study › Measurers. The measurer code is one letter A–Z; a taken code shows a field error from the 422 response.
+- **Admin audit** uses Previous/Next paging (25 per page), as a "paginated table" (Section 14). The tailor's own audit uses "Load more".
+- **Study mode switch** asks for confirmation with an explanation. After saving, the public-settings cache is refreshed so the admin's Study nav item, and the study route guards, follow at once.
+- **Study › Capture** links to `/study/capture` (15.1, owned by the capture app). Participant cards link to `/study/capture?participant=P00n` ("Start set n").
+- **Tape entry (15.2):**
+  - Blank sites are allowed; the confirmation dialog lists them ("7 measurements are empty") alongside implausible values ("You entered 12.0 cm for waist. Is that correct?").
+  - Values must have at most one decimal.
+  - The page makes no request that could return system values (asserted in e2e).
+  - Readings go to a separate Dexie DB (`vt-study`, table `readings`, image-guard hooks) when the server cannot be reached (network error or 5xx). They are sent on `online`, every 30 s and via "Send now". A queued reading that turns out to be locked or invalid is dropped and reported.
+  - A browser `beforeunload` prompt guards unsaved typed readings.
+  - The Appendix C instructions behind (i) are drafts: `study.instr.*` in `src/lib/i18n/messages/study.*.ts`. **[CONFIRM against the study protocol.]**
+- **Image vault (15.6):** `src/lib/study/imageVault.ts`, AES-GCM-256 with a key from PBKDF2-SHA-256 at 310,000 iterations (a lower count is refused).
+  - Random 16-byte salt and 12-byte IV. File format `VTIMG1 | salt | iv | ciphertext`. File name `P001-set2.vtimg`.
+  - `saveVault` throws `VaultDisabledError` unless `VITE_FEATURE_STUDY_IMAGES=true`.
+  - UI: `src/lib/ui/StudyImageVault.svelte`, shown on Study › Exports in its disabled state. The capture flow (15.1) should pass the frames and meta to it after the burst, then release the frames.
+  - `decryptVault` exists for the study-laptop tooling and tests.
+
+## Traceability rows (Phase 6)
+
+| Requirement | Test |
+|---|---|
+| FR-20 audit records (admin, all users, CSV) | `tests/e2e/admin.spec.ts` "audit: filter and export CSV (download is logged)" |
+| FR-21 approvals, audit, retention | `admin.spec.ts` "approve a pending tailor", "reject needs a reason…", "bulk approve via selection", "settings: retention, study mode off hides the Study section", "deletion requests are listed" |
+| FR-22 study CSV export | `admin.spec.ts` "study: enrol next participant, create measurer, download both exports" |
+| FR-23 blind tape entry | `tests/e2e/study.spec.ts` "measurer enters a reading blind to system values; it locks", "reading 2 before reading 1 is accepted and flagged", "server unreachable: reading is queued…"; `tests/unit/study.test.ts` (queue, helpers) |
+| 7.2 role guards / study 404 | `study.spec.ts` "a tailor cannot open tape entry (403)", "study routes return 404 when study mode is off"; `auth.spec.ts` "wrong role gets a 403 screen" |
+| 15.6 image vault (flag off) | `tests/unit/study.test.ts` "study image vault" (round trip, wrong passphrase, iteration floor, file name, disabled by default) |
+| 17 accessibility | `admin.spec.ts` "axe: admin routes (en/sw)", `study.spec.ts` "axe: tape entry (en/sw)" |
+
+Screenshots: `docs/checkpoints/phase-6/` (EN + SW, 360 × 800 and 1280 × 800).
+
+## Test totals at the end of Phase 6
+
+- Unit (Vitest): 128 passed.
+- E2E (Playwright, phone 360 × 800 and desktop 1280 × 800, `VT_PORT=5190`): 102 passed, including the Phase 0 and 1 specs.
+
+## No API contract changes
+
+All screens use the Phase 1 endpoints as documented. Mock-only behaviour changed: browser persistence, described above.

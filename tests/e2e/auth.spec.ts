@@ -41,8 +41,7 @@ test.describe('Phase 5: sign in, registration, guards (Section 13.1, 7.2)', () =
 		await expect(page).toHaveURL(/\/t\/clients$/);
 	});
 
-	// Needs the admin routes (Phase 6).
-	test.fixme('wrong role gets a 403 screen with a way home', async ({ page }) => {
+	test('wrong role gets a 403 screen with a way home', async ({ page }) => {
 		await loginEn(page, 'wanjiru@vt.test', /\/t\/orders$/);
 		await page.goto('/admin/accounts');
 		await expect(page.getByRole('heading', { name: 'Not allowed' })).toBeVisible();
